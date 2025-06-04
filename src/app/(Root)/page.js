@@ -1,4 +1,4 @@
-import Banner from "@/components/pages/Home/Banner";
+import Banner from "@/components/pages/Home/Banner/Banner";
 import Course from "@/components/pages/Home/Course";
 import Faq from "@/components/pages/Home/Faq";
 import Reviews from "@/components/pages/Home/Reviews";
@@ -8,8 +8,9 @@ import WhyBest from "@/components/pages/Home/WhyBest";
 import Footer from "@/components/shared/footer/Footer";
 
 export default function Home() {
-  return <div>
-    {/* <Banner/>
+  return (
+    <div>
+      {/* <Banner/>
     <Course/>
     <Stats/>
     <WhyBest/>
@@ -17,8 +18,8 @@ export default function Home() {
       <VideoReviews/>
 
     <Faq/> */}
-    <Banner/>
-    <Footer/>
-
-  </div>;
+      <Banner />
+      <Footer />
+    </div>
+  );
 }
