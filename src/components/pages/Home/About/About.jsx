@@ -12,32 +12,7 @@ import CodeParticles from "@/components/shared/animation/CodeParticles"
 import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
 import { cn } from "@/lib/utils"
 
-// Video Player Component
 
-
-// Floating Elements
-const FloatingElements= () => {
-  const shouldReduceMotion = useReducedMotion()
-
-  if (shouldReduceMotion) return null
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <motion.div
-        animate={{ rotate: [0, 360], y: [-10, 10, -10] }}
-        transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-        className="absolute top-20 right-10 w-12 h-12 bg-orange-400/20 rounded-lg transform rotate-45"
-      />
-      <motion.div
-        animate={{ x: [-5, 5, -5], opacity: [0.3, 0.7, 0.3] }}
-        transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-        className="absolute bottom-32 left-8 text-2xl font-mono text-teal-500/20 font-bold"
-      >
-        {"</>"}
-      </motion.div>
-    </div>
-  )
-}
 
 // Animation variants
 const createVariants = (shouldReduceMotion) => ({

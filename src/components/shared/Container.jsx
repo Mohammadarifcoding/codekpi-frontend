@@ -1,8 +1,9 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
-const Container = ({children}) => {
+const Container = ({children,className}) => {
     return (
-        <div className="container mx-auto ">
+        <div className={cn("container mx-auto ",className)}>
             {children}
         </div>
     );

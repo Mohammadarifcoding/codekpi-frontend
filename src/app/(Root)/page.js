@@ -1,11 +1,6 @@
+import Core from "@/components/pages/Core/Core";
 import About from "@/components/pages/Home/About/About";
 import Banner from "@/components/pages/Home/Banner/Banner";
-import Course from "@/components/pages/Home/Course";
-import Faq from "@/components/pages/Home/Faq";
-import Reviews from "@/components/pages/Home/Reviews";
-import Stats from "@/components/pages/Home/Stats";
-import VideoReviews from "@/components/pages/Home/VideoReviews";
-import WhyBest from "@/components/pages/Home/WhyBest";
 import Footer from "@/components/shared/footer/Footer";
 
 export default function Home() {
@@ -21,6 +16,7 @@ export default function Home() {
     <Faq/> */}
       <Banner />
       <About/>
+      <Core/>
       <Footer />
     </div>
   );
