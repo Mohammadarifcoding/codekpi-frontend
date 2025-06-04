@@ -1,12 +1,12 @@
-"use client"
+'use client';
 import { useReducedMotion } from "framer-motion"
 import {motion} from "framer-motion"
 const TechIcon = ({ icon, className = "", delay = 0, duration = 8, size = "w-8 h-8" }) => {
   const shouldReduceMotion = useReducedMotion()
 
-  if (shouldReduceMotion) {
-    return <div className={`${size} ${className} opacity-20`}>{icon}</div>
-  }
+  // if (shouldReduceMotion) {
+  //   return <div className={`${size} ${className} opacity-20`}>{icon}</div>
+  // }
 
   return (
     <motion.div

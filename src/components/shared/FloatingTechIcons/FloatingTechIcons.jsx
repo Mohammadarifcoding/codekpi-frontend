@@ -1,3 +1,4 @@
+'use client';
 import { useReducedMotion } from "framer-motion"
 import TechIcon from "./TechIcon"
 import { techIcons } from "../technologyIcon/TechnologyIcon"
@@ -7,7 +8,6 @@ const FloatingTechIcons = () => {
   const shouldReduceMotion = useReducedMotion()
 
 
-  if (shouldReduceMotion) return null
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">

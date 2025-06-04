@@ -1,3 +1,5 @@
+'use client';
+
 import BannerVariants from '@/components/shared/animation/AnimationVariants/BannerVariants'
 import { useReducedMotion, motion } from 'framer-motion'
 import { Code, Trophy, Users } from 'lucide-react'
@@ -12,6 +14,7 @@ const StatsSection = () => {
     { icon: Trophy, value: "5+", label: "Workshops" },
     { icon: Code, value: "24/7", label: "Code Support" },
   ]
+   
 
   return (
     <motion.div

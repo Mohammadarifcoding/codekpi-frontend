@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
@@ -57,7 +57,7 @@ const Core = () => {
 
   const variants = createMotionVariants(shouldReduceMotion);
 
-  if (shouldReduceMotion) return null; // Accessibility-first: skip animations
+   // Accessibility-first: skip animations
 
   return (
     <Container className="my-10 sm:my-16 ">

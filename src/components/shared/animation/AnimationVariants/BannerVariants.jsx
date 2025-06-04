@@ -1,6 +1,5 @@
-import React from 'react';
-
-const BannerVariants = ({shouldReduceMotion}) => ({
+// ✅ Just a function — not a component
+const BannerVariants = (shouldReduceMotion = false) => ({
   container: {
     hidden: { opacity: 0 },
     visible: {
@@ -37,16 +36,11 @@ const BannerVariants = ({shouldReduceMotion}) => ({
       scale: shouldReduceMotion ? 1 : [1, 1.1, 1],
       transition: {
         duration: 4,
-        repeat: Number.POSITIVE_INFINITY,
-        ease: "easeInOut",
+        repeat: Infinity,
+        ease: 'easeInOut',
       },
     },
   },
-})
+});
 
 export default BannerVariants;
-
-
-
-
-

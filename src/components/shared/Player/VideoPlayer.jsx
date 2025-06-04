@@ -1,3 +1,4 @@
+'use client';
 import { useReducedMotion } from 'framer-motion';
 import {useState} from 'react'
 import React from 'react';
@@ -7,6 +8,7 @@ import { Play } from 'lucide-react';
 const VideoPlayer = ({ videoId = "8RpdeCi9V6M" }) => {
   const [isPlaying, setIsPlaying] = useState(false)
   const shouldReduceMotion = useReducedMotion()
+   
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}

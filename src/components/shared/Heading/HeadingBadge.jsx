@@ -1,9 +1,11 @@
+'use client';
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 
 const HeadingBadge = ({children}) => {
       const shouldReduceMotion = useReducedMotion()
+       
     return (
          <motion.div variants={{
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 30 },

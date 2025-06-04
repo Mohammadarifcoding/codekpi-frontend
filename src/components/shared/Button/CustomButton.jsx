@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -6,6 +7,7 @@ import Link from 'next/link';
 
 const CustomButton = ({size ="sm" , type="primary", children, className, Icon}) => {
    const shouldReduceMotion = useReducedMotion()
+    
     return (
        <>
        
