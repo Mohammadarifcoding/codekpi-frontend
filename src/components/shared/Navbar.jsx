@@ -9,7 +9,8 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import logo from "/src/assets/Logo/logo.png";
+import logo from "/src/assets/Logo/logo2.png";
+import Container from "./Container";
 
 // To enable smooth scrolling globally, add in styles/globals.css:
 // html { scroll-behavior: smooth; }
@@ -30,29 +31,30 @@ export default function Navbar() {
   }, [router.pathname]);
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ",
-        isScrolled
-          ? "bg-white backdrop-blur-md shadow-sm h-16"
-          : "bg-transparent h-20"
-      )}
-    >
-      <div className="container mx-auto flex items-center justify-between px-4 h-full">
-        {/* Logo */}
+    <Container>
+      <header
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ",
+          isScrolled
+            ? "bg-white backdrop-blur-md shadow-sm h-16"
+            : "bg-transparent h-20"
+        )}
+      >
+        <div className="flex items-center justify-between container mx-auto h-full">
+          {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image
             src={logo || "/placeholder.svg"}
-            width={isScrolled ? 120 : 130}
+            width={isScrolled ? 90 : 100}
             height={isScrolled ? 30 : 35}
             alt="Company Logo"
-            className="transition-all duration-300 hover:scale-105"
+            className={`transition-all duration-300 hover:scale-105 h-auto ${isScrolled ? "sm:w-[80px] w-[70px]" : "  sm:w-[110px] w-[80px]"}`}
             priority
           />
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-3">
+        <nav className="hidden  lg:flex items-center gap-3">
             {Navdata?.map((nav, index) => (
               <Link
                 key={index} href={nav?.route}
@@ -94,34 +96,38 @@ export default function Navbar() {
       </div>
 
       {/* Mobile dropdown */}
-      {menuOpen && (
-        <div className="lg:hidden bg-white shadow-md">
-          <div className="flex flex-col px-4 py-6 space-y-4">
-            {Navdata.map((nav, idx) => {
-              const active = router.pathname === nav.route;
-              return (
-                <div key={idx} className="group">
-                 <Link  href={nav.route} scroll={false}>
-                  <span
-                    className={cn(
-                      "flex items-center gap-2 px-2 py-2 rounded-md transition-colors ",
-                      active
-                        ? "bg-primary/10 text-primary"
-                        : "text-gray-700 hover:bg-gray-100"
-                    )}
-                  >
-                    <nav.icon className="w-5 h-5" />
-                    {nav.name}
-                  </span>
-                </Link>
-                  <span className="w-100">fsdfsd</span>
-                </div>
-               
-              );
-            })}
-          </div>
+
+<div
+  className={`lg:hidden bg-white shadow-md overflow-hidden transition-all duration-300 ease-in-out ${
+    menuOpen ? 'max-h-[500px] opacity-100' : 'h-0 opacity-0'
+  }`}
+>
+  <div className="flex flex-col px-4 py-3 gap-2">
+    {Navdata.map((nav, idx) => {
+      const active = router.pathname === nav.route;
+      return (
+        <div key={idx} className="group">
+          <Link href={nav.route} scroll={false}>
+            <span
+              className={cn(
+                "flex items-center gap-2 px-2 py-2 rounded-md transition-colors",
+                active
+                  ? "bg-primary/10 text-primary"
+                  : "text-gray-700 hover:bg-gray-100"
+              )}
+            >
+              <nav.icon className="w-5 h-5" />
+              {nav.name}
+            </span>
+          </Link>
         </div>
-      )}
+      );
+    })}
+  </div>
+</div>
+
+
     </header>
+    </Container>
   );
 }
