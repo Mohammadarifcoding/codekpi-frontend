@@ -104,7 +104,7 @@ CodeKPI Programming Club-এর ২০২৫ ওরিয়েন্টেশ�
           </button>
           <button
             onClick={() =>  MessageCompletePart(user._id)}
-            className="mt-2 px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors duration-300"
+            className="mt-2 px-4 py-2 bg-secondary text-white rounded hover:bg-orange-600 transition-colors duration-300"
           >
             {user?.message ? "Done" :"Complete"}
           </button>
@@ -128,7 +128,7 @@ CodeKPI Programming Club-এর ২০২৫ ওরিয়েন্টেশ�
           </button>
           <button
             onClick={() => callCompletePart(user._id)}
-            className="mt-2 px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors duration-300"
+            className="mt-2 px-4 py-2 bg-secondary text-white rounded hover:bg-orange-600 transition-colors duration-300"
           >
             {user?.call ? "Done" :"Complete"}
           </button> 

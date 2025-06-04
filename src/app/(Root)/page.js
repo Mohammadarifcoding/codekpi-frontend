@@ -1,3 +1,4 @@
+import About from "@/components/pages/Home/About/About";
 import Banner from "@/components/pages/Home/Banner/Banner";
 import Course from "@/components/pages/Home/Course";
 import Faq from "@/components/pages/Home/Faq";
@@ -19,6 +20,7 @@ export default function Home() {
 
     <Faq/> */}
       <Banner />
+      <About/>
       <Footer />
     </div>
   );

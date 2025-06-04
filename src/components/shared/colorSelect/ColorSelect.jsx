@@ -19,7 +19,7 @@ export default function ColorSelect({
 }) {
   const [defaultColors, setDefaultColors] = useState([
     "bg-red-500",
-    "bg-orange-500",
+    "bg-secondary",
     "bg-lime-500",
     "bg-emerald-500",
     "bg-cyan-500",

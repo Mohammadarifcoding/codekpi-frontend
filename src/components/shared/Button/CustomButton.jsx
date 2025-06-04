@@ -16,7 +16,7 @@ const CustomButton = ({size ="sm" , type="primary", children, className, Icon}) 
 
    <Button
    size={size}
-  className={cn("group relative overflow-hidden h-12 px-8 text-base font-semibold bg-gradient-to-r from-primary to-secondary transition-all duration-500 ease-in-out",className)}
+  className={cn("group relative overflow-hidden h-12 px-8 text-base font-semibold bg-gradient-to-r from-secondary to-secondary transition-all duration-500 ease-in-out",className)}
 >
   <span className="relative z-10 flex items-center">
     {children}
@@ -33,7 +33,7 @@ const CustomButton = ({size ="sm" , type="primary", children, className, Icon}) 
   </span>
 
   {/* Gliding Gradient Layer */}
-  <span className="absolute inset-0 z-0 bg-gradient-to-r from-secondary to-primary transition-transform duration-500 scale-x-0 group-hover:scale-x-100 origin-left" />
+  <span className="absolute inset-0 z-0 bg-gradient-to-r from-primary to-primary transition-transform duration-500 scale-x-0 group-hover:scale-x-100 origin-left" />
 </Button> 
   </motion.div> :  <motion.div
     whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}

@@ -11,6 +11,7 @@ import StatsSection from "./StatsSection"
 import CodeParticles from "@/components/shared/animation/CodeParticles"
 import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
 import CustomButton from "@/components/shared/Button/CustomButton"
+import HeadingBadge from "@/components/shared/Heading/HeadingBadge"
 
 
 const Banner = ({ className = "" }) => {
@@ -56,16 +57,21 @@ const Banner = ({ className = "" }) => {
 
       {/* Main Content */}
       <div className="relative z-10 flex min-h-screen items-center">
-        <div className="w-full px-4 pb-20 sm:pt-36 pt-24 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:pb-20 pb-4 sm:pt-36 pt-24 sm:px-6 lg:px-8">
           <motion.div variants={variants.container} initial="hidden" animate="visible" className="mx-auto max-w-5xl">
             <div className="text-center">
               {/* Premium Badge */}
-<motion.div variants={variants.item} className="mb-8 sm:block hidden">
+{/* <motion.div variants={variants.item} className="mb-8 sm:block hidden">
   <Badge
     variant="secondary"
     className="mb-6 inline-flex hover:bg-primary/20 cursor-pointer items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm text-primary font-medium"
   >
-    <motion.div
+    
+  </Badge>
+</motion.div> */}
+
+<HeadingBadge>
+<motion.div
       animate={{ rotate: 360 }}
       transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
     >
@@ -75,10 +81,8 @@ const Banner = ({ className = "" }) => {
     <span>Empowering New Tech Innovation</span>
 
     <Code className="h-4 w-4" />
-  </Badge>
-</motion.div>
 
-
+</HeadingBadge>
 
               {/* Hero Heading with Programming Theme */}
 <motion.div variants={variants.item} className="sm:mb-8 mb-4 text-center">
