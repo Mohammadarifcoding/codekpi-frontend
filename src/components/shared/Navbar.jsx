@@ -12,6 +12,7 @@ import Link from "next/link";
 import logo from "/src/assets/Logo/logo2.png";
 import Container from "./Container";
 import DropDown from "./DropDown/DropDown";
+import CustomButton from "./Button/CustomButton";
 
 // To enable smooth scrolling globally, add in styles/globals.css:
 // html { scroll-behavior: smooth; }
@@ -69,12 +70,12 @@ export default function Navbar() {
               </Link>
             ))}
 
-          <button  className="bg-primary hover:bg-primary/90 text-white rounded-xl">
-            <a href="tel:+8801770511497" className="flex items-center gap-2 px-3 py-2">
-              <IoCallSharp className="w-5 h-5" />
+            <Link href="tel:+8801770511497">
+            <CustomButton type='primary'  Icon={IoCallSharp} >
               Contact now
-            </a>
-          </button>
+          </CustomButton>
+            </Link>
+          
         </nav>
 
         {/* Mobile Actions */}

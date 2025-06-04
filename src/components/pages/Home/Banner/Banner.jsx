@@ -10,6 +10,7 @@ import BannerVariants from "@/components/shared/animation/AnimationVariants/Bann
 import StatsSection from "./StatsSection"
 import CodeParticles from "@/components/shared/animation/CodeParticles"
 import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
+import CustomButton from "@/components/shared/Button/CustomButton"
 
 
 const Banner = ({ className = "" }) => {
@@ -55,100 +56,78 @@ const Banner = ({ className = "" }) => {
 
       {/* Main Content */}
       <div className="relative z-10 flex min-h-screen items-center">
-        <div className="w-full px-4 py-20 sm:px-6 lg:px-8">
+        <div className="w-full px-4 pb-20 sm:pt-36 pt-24 sm:px-6 lg:px-8">
           <motion.div variants={variants.container} initial="hidden" animate="visible" className="mx-auto max-w-5xl">
             <div className="text-center">
               {/* Premium Badge */}
-              <motion.div variants={variants.item} className="mb-8">
-                <Badge
-                  variant="secondary"
-                  className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 px-6 py-3 text-primary shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                  >
-                    <Sparkles className="h-4 w-4" />
-                  </motion.div>
-                  <span className="font-semibold">Empowering Tech Innovation</span>
-                  <Code className="h-4 w-4" />
-                </Badge>
-              </motion.div>
+<motion.div variants={variants.item} className="mb-8 sm:block hidden">
+  <Badge
+    variant="secondary"
+    className="mb-6 inline-flex hover:bg-primary/20 cursor-pointer items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm text-primary font-medium"
+  >
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+    >
+      <Sparkles className="h-4 w-4" />
+    </motion.div>
+
+    <span>Empowering New Tech Innovation</span>
+
+    <Code className="h-4 w-4" />
+  </Badge>
+</motion.div>
+
+
 
               {/* Hero Heading with Programming Theme */}
-              <motion.div variants={variants.item} className="mb-8">
-                <h1
-                  id="banner-heading"
-                  className="text-5xl font-black tracking-tight sm:text-6xl lg:text-7xl xl:text-8xl"
-                >
-                  <span className="block text-gray-900">Welcome to</span>
-                  <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                    Code KPI
-                  </span>
-                  <span className="block text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-700 mt-2">
-                    Where Programming
-                  </span>
-                  <span className="block text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                    Meets Innovation
-                  </span>
-                </h1>
-              </motion.div>
+<motion.div variants={variants.item} className="sm:mb-8 mb-4 text-center">
+  {/* Headline */}
+  <h1
+    id="banner-heading"
+    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight"
+  >
+    <span className="flex sm:gap-2 gap-1 flex-col sm:flex-row  text-center items-center justify-center"> 
 
-              {/* Enhanced Description */}
-              <motion.p
-                variants={variants.item}
-                className="mx-auto mb-12 max-w-3xl text-xl leading-relaxed text-gray-600 sm:text-2xl lg:text-2xl font-light"
-              >
-                Join <span className="font-semibold text-primary">Khulna Polytechnic Institute&apos;s</span> premier
-                programming community. Master <span className="font-mono text-blue-600">Python</span>,{" "}
-                <span className="font-mono text-yellow-600">JavaScript</span>,{" "}
-                <span className="font-mono text-blue-500">React</span> and more with passionate developers under expert
-                guidance.
-              </motion.p>
+       <span className="block text-gray-900">Welcome to</span>
+    <span className="block bg-secondary bg-clip-text text-4xl md:text-5xl lg:text-6xl text-transparent">
+      CodeKPI
+    </span>
+    </span>
+   
+    <span className="block text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-gray-700 mt-2">
+      Where Programming Meets Innovation
+    </span>
+  </h1>
+</motion.div>
 
-              {/* Premium CTA Buttons */}
-              <motion.div
-                variants={variants.item}
-                className="mb-16 flex flex-col items-center justify-center gap-6 sm:flex-row"
-              >
-                <motion.div
-                  whileHover={shouldReduceMotion ? {} : { scale: 1.05, y: -2 }}
-                  whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
-                  <Button
-                    size="lg"
-                    className="group relative h-14 px-10 text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 overflow-hidden"
-                  >
-                    <span className="relative z-10 flex items-center">
-                      Start Coding Journey
-                      <motion.div
-                        className="ml-2"
-                        animate={{ x: [0, 4, 0] }}
-                        transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
-                      >
-                        <Code className="h-5 w-5" />
-                      </motion.div>
-                    </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </Button>
-                </motion.div>
+{/* Description */}
+<motion.p
+  variants={variants.item}
+  className="mx-auto mb-10 max-w-2xl text-base sm:text-lg text-gray-600 font-base leading-relaxed text-center"
+>
+  Join <span className="font-semibold text-primary">Khulna Polytechnic’s</span> programming club. Learn 
+  <span className="font-mono text-blue-600"> Python</span>, 
+  <span className="font-mono text-yellow-600"> JavaScript</span>, 
+  <span className="font-mono text-blue-500"> AI</span> and more — from passionate students and mentors.
+</motion.p>
 
-                <motion.div
-                  whileHover={shouldReduceMotion ? {} : { scale: 1.05, y: -2 }}
-                  whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="group h-14 px-10 text-lg font-bold bg-white/10 backdrop-blur-md border-2 border-white/30 hover:bg-white/20 hover:border-white/50 shadow-xl hover:shadow-2xl transition-all duration-300"
-                  >
-                    Explore Projects
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-2" />
-                  </Button>
-                </motion.div>
-              </motion.div>
+{/* CTA */}
+<motion.div
+  variants={variants.item}
+  className="mb-16 flex flex-col items-center justify-center gap-4 sm:flex-row"
+>
+ 
+
+<CustomButton type="primary" Icon={Code}>
+Join Club
+</CustomButton>
+<CustomButton type="secondary" Icon={ArrowRight}>
+About Us
+</CustomButton>
+
+</motion.div>
+
 
               {/* Stats Section */}
               <StatsSection />

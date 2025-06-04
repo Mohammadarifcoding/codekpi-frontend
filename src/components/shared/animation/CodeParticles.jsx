@@ -8,7 +8,7 @@ import {motion} from 'framer-motion'
  const CodeParticles = () => {
   const shouldReduceMotion = useReducedMotion()
 
-  const codeSymbols = ["</", "{}", "()", "[]", "=>", "&&", "||", "++", "--", "===", "!==", "var", "let", "const"]
+  const codeSymbols = ["</", "{}", "()", "[]", "=>", "&&", "||", "++", "--", "===", "!==", "var", "let", "const","0","1"]
 
   if (shouldReduceMotion) return null
 

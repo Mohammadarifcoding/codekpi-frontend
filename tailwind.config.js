@@ -31,7 +31,7 @@ module.exports = {
     				DEFAULT: '#023047',
     			},
     			secondary: {
-    				DEFAULT: '#219EBC',
+    				DEFAULT: '#F98623',
     			},
     			muted: {
     				DEFAULT: '#8ECAE6',

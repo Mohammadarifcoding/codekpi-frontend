@@ -17,7 +17,7 @@ const FloatingTechIcons = () => {
             icon={tech.icon}
             delay={tech.delay}
             duration={8 + Math.random() * 4}
-            size="w-12 h-12 md:w-16 md:h-16"
+            size="sm:w-12 w-8 sm:h-12 h-8 md:w-16 md:h-16"
             className="drop-shadow-lg"
           />
         </div>
@@ -37,7 +37,7 @@ const FloatingTechIcons = () => {
             icon={<Code className="w-full h-full text-gray-400" />}
             delay={Math.random() * 3}
             duration={6 + Math.random() * 6}
-            size="w-6 h-6 md:w-8 md:h-8"
+            size="sm:w-6 w-4 sm:h-6 h-4 md:w-8 md:h-8"
             className="opacity-30"
           />
         </div>
