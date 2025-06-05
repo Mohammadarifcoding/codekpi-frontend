@@ -18,7 +18,10 @@ const CustomButton = ({size ="sm" , type="primary", children, className, Icon}) 
 
    <Button
    size={size}
-  className={cn("group relative overflow-hidden h-12 px-8 text-base font-semibold bg-gradient-to-r from-secondary to-secondary transition-all duration-500 ease-in-out",className)}
+  className={cn(
+  "group relative overflow-hidden font-semibold bg-gradient-to-r from-secondary to-secondary transition-all duration-500 ease-in-out",
+  className
+)}
 >
   <span className="relative z-10 flex items-center">
     {children}
@@ -45,7 +48,10 @@ const CustomButton = ({size ="sm" , type="primary", children, className, Icon}) 
     <Button
        size={size}
       variant="outline"
-      className={cn("group relative h-12 px-8 text-base font-semibold border-gray-300 hover:border-gray-400 transition-all duration-300 ease-in-out",className)}
+        className={cn(
+    "group relative font-semibold border-gray-300 hover:border-gray-400 transition-all duration-300 ease-in-out",
+    className
+  )}
     >
       <span className="flex items-center">
       {children}

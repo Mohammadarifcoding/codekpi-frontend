@@ -119,15 +119,24 @@ const Banner = ({ className = "" }) => {
 {/* CTA */}
 <motion.div
   variants={variants.item}
-  className="mb-16 flex flex-col items-center justify-center gap-4 sm:flex-row"
+  className="mb-16 flex flex-row items-center justify-center gap-4 sm:flex-row"
 >
  
 
-<CustomButton type="primary" Icon={Code}>
-Join Club
+<CustomButton
+  type="primary"
+  className="h-10 md:h-12 px-4 md:px-8 text-sm md:text-base"
+  Icon={Code}
+>
+  Join Club
 </CustomButton>
-<CustomButton type="secondary" Icon={ArrowRight}>
-About Us
+
+<CustomButton
+  type="secondary"
+  className="h-10 md:h-12 px-4 md:px-8 text-sm md:text-base"
+  Icon={ArrowRight}
+>
+  About Us
 </CustomButton>
 
 </motion.div>

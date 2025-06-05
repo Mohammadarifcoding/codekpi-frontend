@@ -1,70 +1,112 @@
-'use client';
+"use client"
 
-import { useRef, useState } from "react";
+import { Mail, MapPin, Github, Linkedin, Twitter, ArrowRight, Youtube, Facebook } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import SocialLinks from "../social/SocialLinks"
+import CustomButton from "../Button/CustomButton"
+import logo from '/src/assets/Logo/logo2.png'
+import Image from "next/image"
+import Link from "next/link"
 
-import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter, Users, Youtube } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
-import logo from "/src/assets/Logo/logo.png";
-const Footer = () => {
-    
-    
-    return (
-      <footer className="bg-gray-100 text-primary">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            {/* <h2 className="text-2xl font-bold mb-4">CodeKpi</h2> */}
-            <Image src={logo} width={100} height={100} alt="image"/>
-            <p className="text-sm text-gray-400 mb-4">Our vision is to make people skilled</p>
-            <div className="flex space-x-4">
-              <Link href="https://www.facebook.com/freelancingcareerit?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                <Facebook className="h-6 w-6" />
-                <span className="sr-only">Facebook Page</span>
-              </Link>
-              <Link href="https://m.facebook.com/groups/publicfreelancingcareer/?ref=share&mibextid=NSMWBT" target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                <Users className="h-6 w-6" />
-                <span className="sr-only">Facebook Group</span>
-              </Link>
-              <Link href="https://youtube.com/@freelancingcareerit?si=J6Hw4M7sq8ifAXia" target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                <Youtube className="h-6 w-6" />
-                <span className="sr-only">YouTube Channel</span>
-              </Link>
+
+
+const Footer = ({ className = "" }) => {
+  const currentYear = new Date().getFullYear()
+
+  const quickLinks = [
+    { name: "About", href: "#about" },
+    { name: "Events", href: "#events" },
+    { name: "Projects", href: "#projects" },
+    { name: "Team", href: "#team" },
+    { name: "Contact", href: "#contact" },
+  ]
+
+  const socialLinks = [
+        { href: "https://www.facebook.com/Codekpi/", icon: <Facebook className="w-5 h-5" />, label: "Facebook" },
+    { href: "https://github.com/CodeKPI", icon: <Github className="w-5 h-5" />, label: "GitHub" },
+    { href: "https://www.youtube.com/channel/UCp2PaqHwu86L_xw1GY2smYA", icon: <Youtube className="w-5 h-5" />, label: "Youtube" },
+
+  ]
+
+  return (
+    <footer className={`relative bg-gradient-to-br from-gray-50 to-white border-t border-gray-100 ${className}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+          {/* Brand and Contact */}
+          <div className="flex flex-col">
+            <div className="mb-4">
+              <Link href="/" className="flex-shrink-0">
+          <Image
+            src={logo || "/placeholder.svg"}
+            width={90}
+            height={30}
+            alt="Company Logo"
+            className={`transition-all duration-300 hover:scale-105 h-auto sm:w-[80px] w-[60px]`}
+            priority
+          />
+          </Link>
+              <p className="text-sm text-gray-500">Khulna Polytechnic Institute</p>
+            </div>
+
+            {/* Contact Info - Simplified */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-gray-600">
+                <MapPin className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                <span className="text-sm">Khulna Polytechnic Institute, Khulna</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-600">
+                <Mail className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                <span className="text-sm">contact@codekpi.club</span>
+              </div>
             </div>
           </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><Link href="/courses" className="hover:text-white">Courses</Link></li>
-              <li><Link href="/about" className="hover:text-white">About Us</Link></li>
-              <li><Link href="/contact" className="hover:text-white">Contact</Link></li>
-              <li><Link href="/faq" className="hover:text-white">FAQ</Link></li>
-            </ul>
+
+          {/* Quick Links - Simplified */}
+          <div className="flex flex-col">
+            <h4 className="text-sm font-semibold text-gray-900 mb-4">Quick Links</h4>
+            <div className="flex flex-wrap gap-x-6 gap-y-2">
+              {quickLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm"
+                >
+                  {link.name}
+                </a>
+              ))}
+            </div>
           </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <ul className="space-y-2">
-              <li className="flex items-center">
-                <Phone className="h-5 w-5 mr-2 flex-shrink-0" />
-                <span>01770511497</span>
-              </li>
-              <li className="flex items-center">
-                <Phone className="h-5 w-5 mr-2 flex-shrink-0" />
-                <span>01986711198</span>
-              </li>
-              <li className="flex items-center">
-                <Mail className="h-5 w-5 mr-2 flex-shrink-0" />
-                <span>freelancingcare8@gmail.com</span>
-              </li>
-            </ul>
+
+          {/* Join CTA - Simplified */}
+          <div className="flex flex-col items-start md:items-end">
+            <CustomButton Icon={ArrowRight}>
+Join Our Community
+
+            </CustomButton>
+
+            <div className="flex gap-2 mt-4">
+              {socialLinks.map((social) => (
+                <SocialLinks key={social.label} href={social.href} icon={social.icon} label={social.label} />
+              ))}
+            </div>
           </div>
         </div>
-        <div className="mt-8 pt-8 border-t border-gray-700 text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} CodeKpi. All rights reserved.</p>
+
+        {/* Copyright - Simplified */}
+        <div className="mt-8 pt-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-500 text-sm">© {currentYear} CodeKPI. All rights reserved.</p>
+          <div className="flex gap-6 text-xs">
+            <a href="#privacy" className="text-gray-500 hover:text-orange-500 transition-colors">
+              Privacy
+            </a>
+            <a href="#terms" className="text-gray-500 hover:text-orange-500 transition-colors">
+              Terms
+            </a>
+          </div>
         </div>
       </div>
     </footer>
-    );
-};
+  )
+}
 
-export default Footer;
+export default Footer

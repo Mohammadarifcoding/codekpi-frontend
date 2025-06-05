@@ -1,4 +1,4 @@
-import Core from "@/components/pages/Core/Core";
+import Core from "@/components/pages/Home/Core/Core";
 import About from "@/components/pages/Home/About/About";
 import Banner from "@/components/pages/Home/Banner/Banner";
 import Footer from "@/components/shared/footer/Footer";
@@ -15,8 +15,8 @@ export default function Home() {
 
     <Faq/> */}
       <Banner />
-      <About/>
-      <Core/>
+      <About />
+      <Core />
       <Footer />
     </div>
   );

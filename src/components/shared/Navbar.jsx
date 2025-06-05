@@ -71,7 +71,7 @@ export default function Navbar() {
             ))}
 
             <Link href="tel:+8801770511497">
-            <CustomButton type='primary'  Icon={IoCallSharp} >
+            <CustomButton size="sm" type='primary'  Icon={IoCallSharp} >
               Contact now
           </CustomButton>
             </Link>
