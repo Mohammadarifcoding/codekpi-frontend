@@ -30,7 +30,7 @@ const Footer = ({ className = "" }) => {
 
   return (
     <footer className={`relative bg-gradient-to-br from-gray-50 to-white border-t border-gray-100 ${className}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className=" px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
           {/* Brand and Contact */}
           <div className="flex flex-col">

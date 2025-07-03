@@ -141,7 +141,6 @@ const Banner = ({ className = "" }) => {
 
 </motion.div>
 
-
               {/* Stats Section */}
               <StatsSection />
             </div>
