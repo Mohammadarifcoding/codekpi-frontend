@@ -14,6 +14,8 @@ import StarRating from './StarRating';
 import HeadingBadge from '@/components/shared/Heading/HeadingBadge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import axios from 'axios';
+import Submitted from './Submitted';
 
 
 
@@ -56,7 +58,7 @@ const ReviewForm = () => {
    const watchedText = watch("text")
   const textLength = watchedText?.length || 0
 
-  const departments = ["CST", "CT", "ET", "PT", "CE", "ME", "AE", "ARCH", "Other"]
+  const departments = ['CST', 'CT', 'ET', 'MT', 'ENT', 'PT', 'RAC']
  const sessions = [
   "2004-05", "2005-06", "2006-07", "2007-08", "2008-09",
   "2009-10", "2010-11", "2011-12", "2012-13", "2013-14",
@@ -70,12 +72,19 @@ const ReviewForm = () => {
 
    const onSubmit = async (data) => {
     try {
-      console.log("Submitting review:", data)
+      
 
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-
-      setSubmitted(true)
+    //   await new Promise((resolve) => setTimeout(resolve, 2000))
+    const submitReview = await axios.post("https://code-kpi-backend.vercel.app/api/v1/review",data)
+    console.log(submitReview)
+    if(submitReview.data.success){
+        setSubmitted(true)
+    }
+    else{
+        throw new Error("Failed to submit review")
+    }
+      
     } catch (error) {
       console.error("Submission error:", error)
       alert("Failed to submit review. Please try again.")
@@ -83,28 +92,11 @@ const ReviewForm = () => {
   }
  if (submitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 flex items-center justify-center p-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-white rounded-2xl p-8 shadow-xl border border-white/20 text-center max-w-md w-full"
-        >
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Check className="w-8 h-8 text-green-500" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Thank You!</h2>
-          <p className="text-gray-600 mb-6">Your review has been submitted successfully and will be reviewed soon.</p>
-          <Button
-            onClick={() => {
-              setSubmitted(false)
-              reset()
-            }}
-            className="bg-orange-500 hover:bg-orange-600 text-white"
-          >
-            Submit Another Review
-          </Button>
-        </motion.div>
-      </div>
+
+    <Submitted onClick={()=>{
+      setSubmitted(false)
+      reset()
+    }}/>
     )
   }
 
@@ -197,7 +189,7 @@ const ReviewForm = () => {
                   >
                     <select
                       {...field}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none focus:border-orange-500 transition-colors ${
                         errors.department ? "border-red-300 bg-red-50" : "border-gray-300"
                       }`}
                     >
@@ -224,7 +216,7 @@ const ReviewForm = () => {
                   >
                     <select
                       {...field}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none  transition-colors  ${
                         errors.session ? "border-red-300 bg-red-50" : "border-gray-300"
                       }`}
                     >
@@ -251,7 +243,7 @@ const ReviewForm = () => {
                   >
                     <select
                       {...field}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none focus:border-orange-500 transition-colors ${
                         errors.shift ? "border-red-300 bg-red-50" : "border-gray-300"
                       }`}
                     >
@@ -320,7 +312,7 @@ const ReviewForm = () => {
             <Button
               type="submit"
               disabled={isSubmitting || !isValid}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-secondary hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
