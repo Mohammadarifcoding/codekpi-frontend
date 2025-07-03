@@ -1,4 +1,4 @@
-import { Check, Upload } from "lucide-react"
+import { Check, Upload, X } from "lucide-react"
 import ErrorMessage from "../Error/ErrorMessage"
 import Image from "next/image"
 import { useRef, useState } from "react"
@@ -15,7 +15,7 @@ const ImageUpload = ({ value, onChange, error }) => {
       return
     }
 
-    if (file.size > 5 * 1024 * 1024) {
+    if (file.size > 50 * 1024 * 1024) {
       alert("Image size should be less than 5MB")
       return
     }
@@ -81,7 +81,19 @@ const ImageUpload = ({ value, onChange, error }) => {
             <p className="text-sm text-green-700 font-medium">Image uploaded successfully!</p>
             <p className="text-xs text-green-600">You can upload a new image to replace this one.</p>
           </div>
-          <Check className="w-5 h-5 text-green-500" />
+          <div className="flex flex-col-reverse justify-between items-center ">
+    {/* <Check className="w-5 h-5 text-green-500" /> */}
+          <button
+      type="button"
+      onClick={() => onChange('')}
+      className=" text-red-500 hover:text-red-700 transition"
+    >
+      <X className="w-6 h-6" />
+    </button>
+
+          </div>
+      
+
         </div>
       )}
 
@@ -125,7 +137,7 @@ const ImageUpload = ({ value, onChange, error }) => {
             <p className="text-sm font-medium text-gray-900">
               {uploading ? "Uploading..." : "Drop your image here, or click to browse"}
             </p>
-            <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 5MB</p>
+            <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 50MB</p>
           </div>
 
           {uploading && (
