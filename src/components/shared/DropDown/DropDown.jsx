@@ -1,11 +1,14 @@
+import { Button } from '@/components/ui/button';
 import { Navdata } from '@/data/navdata';
 import { cn } from '@/lib/utils';
+import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
 const DropDown = ({menuOpen, router}) => {
     return (
-<div
+      <div>
+        <div
   className={`lg:hidden bg-white shadow-md overflow-hidden transition-all duration-300 ease-in-out ${
     menuOpen ? 'max-h-[500px] opacity-100' : 'h-0 opacity-0'
   }`}
@@ -33,6 +36,8 @@ const DropDown = ({menuOpen, router}) => {
     })}
   </div>
 </div>
+      </div>
+
     );
 };
 

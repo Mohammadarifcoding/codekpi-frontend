@@ -1,5 +1,5 @@
+import Navbar from "@/components/shared/Navbar/Navbar";
 import "./../globals.css";
-import Navbar from "@/components/shared/Navbar";
 
 const layout = ({ children }) => {
   return (
