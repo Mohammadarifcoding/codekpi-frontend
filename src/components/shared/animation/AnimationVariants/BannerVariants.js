@@ -53,9 +53,9 @@ export const variants = {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
+        staggerChildren: 0.05,
         delayChildren: 0.2,
-        duration: 0.8,
+        duration: 0.2,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
@@ -63,15 +63,13 @@ export const variants = {
   item: {
     hidden: {
       opacity: 50,
-      y: 40,
       scale: 0.95,
     },
     visible: {
       opacity: 1,
-      y: 0,
       scale: 1,
       transition: {
-        duration: 0.8,
+        duration: 0.2,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },

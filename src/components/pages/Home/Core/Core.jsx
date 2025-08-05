@@ -1,32 +1,36 @@
-'use client';
-
-import React, { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import React from "react";
 import { Lightbulb, Users, Heart, BookOpen } from "lucide-react";
 import Container from "@/components/shared/Container";
 import  HeadingBadge from '@/components/shared/Heading/HeadingBadge';
-const createMotionVariants = (reduceMotion) => ({
+import { MotionVariantsDiv, MotionVariantsH2, MotionVariantsP } from "@/components/shared/animation/AnimationVariants/MotionVariants";
+
+
+
+
+const Core = () => {
+
+const variants =  {
   container: {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: reduceMotion
-        ? { duration: 0.3 }
-        : { staggerChildren: 0.15, delayChildren: 0.2 },
+      transition: {
+        duration: 0.2,
+        ease: "easeOut",
+      }
     },
   },
   item: {
-    hidden: { opacity: 0, y: reduceMotion ? 0 : 40 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.2,
         ease: "easeOut",
       },
     },
   },
-});
+}
 
 const VALUES = [
   {
@@ -48,15 +52,6 @@ const VALUES = [
       "We code because we care. It’s fun, exciting, and we’re here to build things that matter.",
   },
 ];
-
-
-const Core = () => {
-  const shouldReduceMotion = useReducedMotion();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const variants = createMotionVariants(shouldReduceMotion);
-
    // Accessibility-first: skip animations
 
   return (
@@ -71,36 +66,36 @@ const Core = () => {
         </div>
 
          
-      <div ref={ref} className="text-center max-w-4xl mx-auto mb-12">
-        <motion.div
+      <div className="text-center max-w-4xl mx-auto mb-12">
+        <MotionVariantsDiv
           variants={variants.container}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          animate={"visible"}
         >
-         <motion.h2
+         <MotionVariantsH2
             id="core-heading"
             variants={variants.item}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
           >
             What <span className="text-secondary">Make</span> Us Crazy
-          </motion.h2>
-          <motion.p variants={variants.item} className="md:text-xl sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          </MotionVariantsH2>
+          <MotionVariantsP variants={variants.item} className="md:text-xl sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
             These are the beliefs that guide everything we do at CodeKPI.
-          </motion.p>
-        </motion.div>
+          </MotionVariantsP>
+        </MotionVariantsDiv>
       </div>
 
-      <motion.div
+      <MotionVariantsDiv
         variants={variants.container}
         initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
+        whileInView="visible"
+  viewport={{ once: true, amount: 0.3 }}
         className="flex md:flex-row md:flex-nowrap gap-4 flex-wrap justify-center items-center"
       >
         {VALUES.map((value) => (
-<motion.div
+<MotionVariantsDiv
   key={value.title}
   variants={variants.item}
-  whileHover={shouldReduceMotion ? {} : { y: -6, scale: 1.02 }}
   className="group w-full max-w-sm rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-md p-6 shadow-sm hover:shadow-xl transition-all duration-300 ease-out hover:border-gray-300"
 >
   {/* Icon */}
@@ -122,10 +117,10 @@ const Core = () => {
 
   {/* Subtle hover line */}
   <div className="mt-5 h-1 w-10 mx-auto bg-gradient-to-r from-secondary to-secondary rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300" />
-</motion.div>
+</MotionVariantsDiv>
 
         ))}
-      </motion.div>
+      </MotionVariantsDiv>
     </Container>
   );
 };

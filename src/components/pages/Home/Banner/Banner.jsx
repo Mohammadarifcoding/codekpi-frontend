@@ -1,10 +1,6 @@
-// "use client"
 
-// import { motion } from "framer-motion"
 import { ArrowRight, Code, Sparkles } from "lucide-react"
 import StatsSection from "./StatsSection"
-// import CodeParticles from "@/components/shared/animation/CodeParticles"
-// import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
 import CustomButton from "@/components/shared/Button/CustomButton"
 import HeadingBadge from "@/components/shared/Heading/HeadingBadge"
 import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
@@ -90,7 +86,7 @@ const Banner = () => {
 {/* Description */}
 <MotionVariantsP
   variants={variants.item}
-  className="mx-auto mt-20 max-w-2xl text-base sm:text-lg text-gray-600 font-base leading-relaxed text-center"
+  className="mx-auto mb-10  max-w-2xl text-base sm:text-lg text-gray-600 font-base leading-relaxed text-center"
 >
   Join <span className="font-semibold text-primary">Khulna Polytechnic’s</span> programming club. Learn 
   <span className="font-mono text-blue-600"> Python</span>, 

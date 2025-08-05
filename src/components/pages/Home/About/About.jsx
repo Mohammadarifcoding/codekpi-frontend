@@ -10,7 +10,7 @@ import CodeParticles from "@/components/shared/animation/CodeParticles"
 import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
 import { cn } from "@/lib/utils"
 import { MotionVariantsDiv, MotionVariantsH2, MotionVariantsP } from "@/components/shared/animation/AnimationVariants/MotionVariants";
-
+import videoImage from '/src/assets/whybest/image.jpg'
 
 
 const About = () => {
@@ -79,7 +79,7 @@ const variants = () => {
             animate={"visible"}
             className="lg:col-span-2"
           >
-            <VideoPlayer />
+            <VideoPlayer image={videoImage} />
 
             {/* Video Description */}
   <MotionVariantsDiv

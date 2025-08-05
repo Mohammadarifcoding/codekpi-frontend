@@ -4,11 +4,10 @@ import {useState} from 'react'
 import React from 'react';
 import {motion} from "framer-motion"
 import { Play } from 'lucide-react';
+import Image from 'next/image';
 
-const VideoPlayer = ({ videoId = "8RpdeCi9V6M" }) => {
+const VideoPlayer = ({ videoId = "8RpdeCi9V6M", image }) => {
   const [isPlaying, setIsPlaying] = useState(false)
-  const shouldReduceMotion = useReducedMotion()
-   
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -23,17 +22,22 @@ const VideoPlayer = ({ videoId = "8RpdeCi9V6M" }) => {
           <>
             {/* Video Thumbnail */}
             <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-teal-500/20">
-              <img
-                src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+              <Image
+                src={image}
+                 placeholder="blur"
                 alt="CodeKPI Introduction Video"
                 className="w-full h-full object-cover opacity-80"
+                width={800}
+                height={400}
+                priority={false}
+                quality={100}
               />
             </div>
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.button
-                whileHover={shouldReduceMotion ? {} : { scale: 1.1 }}
-                whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
+                whileHover={ { scale: 1.1 }}
+                whileTap={ { scale: 0.95 }}
                 onClick={() => setIsPlaying(true)}
                 className="group/play relative"
               >
