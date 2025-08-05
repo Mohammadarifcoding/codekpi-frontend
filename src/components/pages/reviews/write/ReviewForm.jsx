@@ -22,7 +22,7 @@ const StarRating = dynamic(() => import('./StarRating'))
 const reviewSchema = z.object({
   userImage: z.string().url("Please upload a valid image").optional().or(z.literal("")),
   name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
-  text: z.string().min(10, "Review must be at least 10 characters").max(500, "Review must be less than 500 characters"),
+  text: z.string().min(10, "Review must be at least 10 characters").max(1000, "Review must be less than 500 characters"),
   rating: z.number().min(1, "Please select a rating").max(5, "Rating must be between 1 and 5"),
   department: z.string().min(1, "Please select your department"),
   session: z.string().min(1, "Please select your session"),
@@ -171,8 +171,8 @@ const ReviewForm = () => {
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors resize-none ${errors.text ? "border-red-300 bg-red-50" : "border-gray-300"}`}
                 />
                 <div className="flex justify-between items-center mt-1">
-                  <span className={`text-xs ${textLength > 500 ? "text-red-500" : textLength > 450 ? "text-yellow-600" : "text-gray-500"}`}>
-                    {textLength}/500 characters
+                  <span className={`text-xs ${textLength > 1000 ? "text-red-500" : textLength > 900 ? "text-yellow-600" : "text-gray-500"}`}>
+                    {textLength}/1000 characters
                   </span>
                 </div>
               </InputField>

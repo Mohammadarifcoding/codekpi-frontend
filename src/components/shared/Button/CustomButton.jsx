@@ -5,15 +5,14 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
-const CustomButton = ({size ="sm" , type="primary", children, className, Icon}) => {
-   const shouldReduceMotion = useReducedMotion()
+const CustomButton = ({size ="sm" , type="primary", children, className, icon}) => {
     
     return (
-       <>
+       <div>
        
        {type == 'primary' ?   <motion.div
-  whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
-  whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
+  whileHover={{ scale: 1.05 }}
+  whileTap={ { scale: 0.95 }}
   transition={{ type: "spring", stiffness: 400, damping: 20 }}>
 
    <Button
@@ -25,13 +24,13 @@ const CustomButton = ({size ="sm" , type="primary", children, className, Icon}) 
 >
   <span className="relative z-10 flex items-center">
     {children}
-    {Icon && <motion.div
+    {icon && <motion.div
       className="ml-2"
       animate={{ x: [0, 4, 0] }}
       transition={{ duration: 1.5, repeat: Infinity }}
     >
     
-        <Icon className="h-5 w-5" />
+       {icon}
       
     </motion.div>}
     
@@ -41,8 +40,8 @@ const CustomButton = ({size ="sm" , type="primary", children, className, Icon}) 
   <span className="absolute inset-0 z-0 bg-gradient-to-r from-primary to-primary transition-transform duration-500 scale-x-0 group-hover:scale-x-100 origin-left" />
 </Button> 
   </motion.div> :  <motion.div
-    whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
-    whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
+    whileHover={ { scale: 1.05 }}
+    whileTap={ { scale: 0.95 }}
     transition={{ type: "spring", stiffness: 400, damping: 20 }}
   >
     <Button
@@ -55,13 +54,11 @@ const CustomButton = ({size ="sm" , type="primary", children, className, Icon}) 
     >
       <span className="flex items-center">
       {children}
-      {Icon && <Icon
-          className="ml-2 h-5 w-5 transform transition-transform duration-300 group-hover:translate-x-1"
-        />}
+      {icon}
         
       </span>
     </Button>
-  </motion.div>}</>
+  </motion.div>}</div>
     );
 };
 

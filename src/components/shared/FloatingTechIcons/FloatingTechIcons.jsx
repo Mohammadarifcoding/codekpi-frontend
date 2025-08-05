@@ -1,11 +1,9 @@
-'use client';
-import { useReducedMotion } from "framer-motion"
+
 import TechIcon from "./TechIcon"
 import { techIcons } from "../technologyIcon/TechnologyIcon"
 import { Code } from "lucide-react"
 
 const FloatingTechIcons = () => {
-  const shouldReduceMotion = useReducedMotion()
 
 
 

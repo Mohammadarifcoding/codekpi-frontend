@@ -6,14 +6,6 @@ import Footer from "@/components/shared/footer/Footer";
 export default function Home() {
   return (
     <div>
-      {/* <Banner/>
-    <Course/>
-    <Stats/>
-    <WhyBest/>
-    <Reviews/>
-      <VideoReviews/>
-
-    <Faq/> */}
       <Banner />
       <About />
       <Core />

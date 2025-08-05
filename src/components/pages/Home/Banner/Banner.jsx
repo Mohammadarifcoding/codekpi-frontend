@@ -1,46 +1,30 @@
-'use client';
+// "use client"
 
-
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
-import { ArrowRight, Code, Sparkles, Users, Trophy, Zap } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { GitIcon, JavaScriptIcon, NodeIcon, PythonIcon, ReactIcon, techIcons, TypeScriptIcon } from "@/components/shared/technologyIcon/TechnologyIcon"
-import BannerVariants from "@/components/shared/animation/AnimationVariants/BannerVariants"
+// import { motion } from "framer-motion"
+import { ArrowRight, Code, Sparkles } from "lucide-react"
 import StatsSection from "./StatsSection"
-import CodeParticles from "@/components/shared/animation/CodeParticles"
-import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
+// import CodeParticles from "@/components/shared/animation/CodeParticles"
+// import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
 import CustomButton from "@/components/shared/Button/CustomButton"
 import HeadingBadge from "@/components/shared/Heading/HeadingBadge"
+import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
+import CodeParticles from "@/components/shared/animation/CodeParticles"
+import {MotionVariantsDiv, MotionVariantsP} from "@/components/shared/animation/AnimationVariants/MotionVariants"
+import { Badge } from "@/components/ui/badge"
+import { variants } from "@/components/shared/animation/AnimationVariants/BannerVariants"
 
 
-const Banner = ({ className = "" }) => {
-  const shouldReduceMotion = useReducedMotion()
-  const variants = BannerVariants(shouldReduceMotion)
-  const { scrollY } = useScroll()
-  const y1 = useTransform(scrollY, [0, 300], [0, -50])
-  const y2 = useTransform(scrollY, [0, 300], [0, -100])
+const Banner = () => {
+
 
   return (
     <section
-      className={`relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 ${className}`}
+      className={`relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50`}
       aria-labelledby="banner-heading"
     >
       {/* Animated Background */}
       <div className="absolute inset-0 -z-10" aria-hidden="true">
         {/* Primary gradient orbs */}
-        <motion.div
-          style={{ y: y1 }}
-          variants={variants.glow}
-          animate="animate"
-          className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-gradient-to-br from-blue-400/30 via-purple-400/20 to-pink-400/30 blur-3xl"
-        />
-        <motion.div
-          style={{ y: y2 }}
-          variants={variants.glow}
-          animate="animate"
-          className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-gradient-to-tr from-emerald-400/30 via-teal-400/20 to-cyan-400/30 blur-3xl"
-        />
 
         {/* Programming-themed background pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:20px_20px]" />
@@ -53,30 +37,30 @@ const Banner = ({ className = "" }) => {
       <FloatingTechIcons />
 
       {/* Code Particles */}
-      <CodeParticles />
+      <CodeParticles /> 
 
       {/* Main Content */}
       <div className="relative z-10 flex min-h-screen items-center">
-        <div className="w-full px-4 sm:pb-20 pb-4 sm:pt-36 pt-24 sm:px-6 lg:px-8">
-          <motion.div variants={variants.container} initial="hidden" animate="visible" className="mx-auto max-w-5xl">
+        <div className="w-full px-4 sm:pb-20 pb-4  pt-24 sm:px-6 lg:px-8">
+          <MotionVariantsDiv variants={variants.container} initial="hidden" animate="visible" className="mx-auto max-w-5xl">
             <div className="text-center">
               {/* Premium Badge */}
-{/* <motion.div variants={variants.item} className="mb-8 sm:block hidden">
+<MotionVariantsDiv variants={variants.item} className="mb-8 sm:block hidden">
   <Badge
     variant="secondary"
     className="mb-6 inline-flex hover:bg-primary/20 cursor-pointer items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm text-primary font-medium"
   >
     
   </Badge>
-</motion.div> */}
+</MotionVariantsDiv>
 
 <HeadingBadge>
-<motion.div
+<MotionVariantsDiv
       animate={{ rotate: 360 }}
       transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
     >
       <Sparkles className="h-4 w-4" />
-    </motion.div>
+    </MotionVariantsDiv>
 
     <span>Empowering New Tech Innovation</span>
 
@@ -84,9 +68,7 @@ const Banner = ({ className = "" }) => {
 
 </HeadingBadge>
 
-              {/* Hero Heading with Programming Theme */}
-<motion.div variants={variants.item} className="sm:mb-8 mb-4 text-center">
-  {/* Headline */}
+              <MotionVariantsDiv variants={variants.item} className="sm:mb-8 mb-20 text-center  ">
   <h1
     id="banner-heading"
     className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight"
@@ -103,21 +85,21 @@ const Banner = ({ className = "" }) => {
       Where Programming Meets Innovation
     </span>
   </h1>
-</motion.div>
+</MotionVariantsDiv>
 
 {/* Description */}
-<motion.p
+<MotionVariantsP
   variants={variants.item}
-  className="mx-auto mb-10 max-w-2xl text-base sm:text-lg text-gray-600 font-base leading-relaxed text-center"
+  className="mx-auto mt-20 max-w-2xl text-base sm:text-lg text-gray-600 font-base leading-relaxed text-center"
 >
   Join <span className="font-semibold text-primary">Khulna Polytechnic’s</span> programming club. Learn 
   <span className="font-mono text-blue-600"> Python</span>, 
   <span className="font-mono text-yellow-600"> JavaScript</span>, 
   <span className="font-mono text-blue-500"> AI</span> and more — from passionate students and mentors.
-</motion.p>
+</MotionVariantsP>
 
 {/* CTA */}
-<motion.div
+<MotionVariantsDiv
   variants={variants.item}
   className="mb-16 flex flex-row items-center justify-center gap-4 sm:flex-row"
 >
@@ -126,25 +108,27 @@ const Banner = ({ className = "" }) => {
 <CustomButton
   type="primary"
   className="h-10 md:h-12 px-4 md:px-8 text-sm md:text-base"
-  Icon={Code}
+  icon={<Code className="h-5 w-5" />}
 >
   Join Club
-</CustomButton>
+</CustomButton> 
 
-<CustomButton
+ <CustomButton
   type="secondary"
   className="h-10 md:h-12 px-4 md:px-8 text-sm md:text-base"
-  Icon={ArrowRight}
+ icon={<ArrowRight
+          className="ml-2 h-5 w-5 transform transition-transform duration-300 group-hover:translate-x-1"
+        />}
 >
   About Us
 </CustomButton>
 
-</motion.div>
+</MotionVariantsDiv>
 
               {/* Stats Section */}
               <StatsSection />
             </div>
-          </motion.div>
+          </MotionVariantsDiv>
         </div>
       </div>
 
