@@ -1,26 +1,25 @@
-'use client';
+
 
 import React from "react"
-import { motion, useReducedMotion, useInView } from "framer-motion"
-import { Play, Users, Award, Code, ArrowRight, ExternalLink } from "lucide-react"
+import { Play, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import HeadingBadge from "@/components/shared/Heading/HeadingBadge"
 import VideoPlayer from "@/components/shared/Player/VideoPlayer"
 import Link from "next/link"
 import CodeParticles from "@/components/shared/animation/CodeParticles"
 import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
 import { cn } from "@/lib/utils"
+import { MotionVariantsDiv, MotionVariantsH2, MotionVariantsP } from "@/components/shared/animation/AnimationVariants/MotionVariants";
 
 
 
-// Animation variants
-const createVariants = (shouldReduceMotion) => ({
-  container: {
+const About = () => {
+const variants = () => {
+ return{ container: {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: shouldReduceMotion ? { duration: 0.3 } : { staggerChildren: 0.15, delayChildren: 0.2 },
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
     },
   },
   item: {
@@ -28,25 +27,15 @@ const createVariants = (shouldReduceMotion) => ({
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: shouldReduceMotion ? 0.3 : 0.6, ease: "easeOut" },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
-  },
-})
-
-
-
-const About = ({ className = "" }) => {
-  const shouldReduceMotion = useReducedMotion()
-  const variants = createVariants(shouldReduceMotion)
-  const ref = React.useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-
+  },}
+}
 
 
   return (
     <section
-      ref={ref}
-      className={`relative py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 overflow-hidden ${className}`}
+      className={`relative py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 overflow-hidden`}
       aria-labelledby="about-heading"
     >
       {/* <FloatingElements /> */}
@@ -54,10 +43,10 @@ const About = ({ className = "" }) => {
       <FloatingTechIcons />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div
+        <MotionVariantsDiv
           variants={variants.container}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          animate={"visible"}
           className="text-center sm:mb-16 mb-4"
         >
             <HeadingBadge>
@@ -67,33 +56,33 @@ const About = ({ className = "" }) => {
             </HeadingBadge>
          
 
-          <motion.h2
+          <MotionVariantsH2
             id="about-heading"
             variants={variants.item}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
           >
             See Our <span className="text-secondary">Story</span> in Action
-          </motion.h2>
+          </MotionVariantsH2>
 
-          <motion.p variants={variants.item} className="md:text-xl sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <MotionVariantsP variants={variants.item} className="md:text-xl sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Watch how CodeKPI is transforming programming education at Khulna Polytechnic Institute and building the
             next generation of tech entrepreneur
-          </motion.p>
-        </motion.div>
+          </MotionVariantsP>
+        </MotionVariantsDiv>
 
         {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Video Section - Takes 2 columns */}
-          <motion.div
+          <MotionVariantsDiv
             variants={variants.item}
             initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            animate={"visible"}
             className="lg:col-span-2"
           >
             <VideoPlayer />
 
             {/* Video Description */}
-  <motion.div
+  <MotionVariantsDiv
       variants={variants.item}
       className="mt-8 rounded-2xl border border-white/20 bg-white/70 backdrop-blur-md shadow-xl px-6 py-8 sm:p-10"
     >
@@ -123,8 +112,8 @@ We started as a small group of friends who loved coding. Over time, CodeKPI beca
           </Link>
         </div>
       </div>
-    </motion.div>
-          </motion.div>
+    </MotionVariantsDiv>
+          </MotionVariantsDiv>
         </div>
       </div>
     </section>

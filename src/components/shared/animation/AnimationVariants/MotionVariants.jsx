@@ -33,3 +33,14 @@ export const MotionVariantsP = ({variants , className, children, ...rest}) => {
             </motion.p>
     );
 };
+
+
+
+export const MotionVariantsH2 = ({variants , className, children, ...rest}) => {
+    return (
+            <motion.h2 variants={variants} className={className} {...rest}>
+
+           {children}
+            </motion.h2>
+    );
+};
