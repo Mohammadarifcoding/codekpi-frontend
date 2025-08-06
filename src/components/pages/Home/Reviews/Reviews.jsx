@@ -1,162 +1,62 @@
 "use client"
-import React, { useState } from "react"
-import { Star, MessageSquare, Users, Loader2 } from "lucide-react"
+
+import React, { useEffect, useState } from "react"
+import { Users, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Rating from "@/components/ui/Rating"
-import ReviewCard  from '@/components/shared/cards/ReviewCard';
+import ReviewCard from "@/components/shared/cards/ReviewCard"
 import SkeletonCard from "@/components/shared/skeleton/SkeletonCard"
+import Link from "next/link"
+import useAxios from "@/hooks/useAxios"
 
-// Sample data matching your structure
-const sampleReviews = [
-  {
-    _id: { $oid: "6866c97b0e4951dfa98b4bac" },
-    userImage:
-      "https://res.cloudinary.com/dztxlecbe/image/upload/v1751566236/delswofnafbhdl3o7o06.jpg",
-    name: "NEELIMA AMIN",
-    text:
-      "When I first came to this club, I didn't really know what the programming world was, but when Brother Arif explained it to us, I understood what the programming world was. This club inspired me to achieve my all of the goals and also helped me!\nThank you!",
-    rating: 5,
-    status: true,
-    department: "CST",
-    session: "2024-25",
-    shift: "Morning Shift",
-    createdAt: { $date: "2025-07-03T18:18:35.022Z" },
-    updatedAt: { $date: "2025-07-03T18:18:35.022Z" },
-    __v: 0
-  },
-   {
-    _id: { $oid: "6866c97b0e4951dfa98b4bac" },
-    userImage:
-      "https://res.cloudinary.com/dztxlecbe/image/upload/v1751566236/delswofnafbhdl3o7o06.jpg",
-    name: "NEELIMA AMIN",
-    text:
-      "When I first came to this club, I didn't really know what the programming world was, but when Brother Arif explained it to us, I understood what the programming world was. This club inspired me to achieve my all of the goals and also helped me!\nThank you!",
-    rating: 5,
-    status: true,
-    department: "CST",
-    session: "2024-25",
-    shift: "Morning Shift",
-    createdAt: { $date: "2025-07-03T18:18:35.022Z" },
-    updatedAt: { $date: "2025-07-03T18:18:35.022Z" },
-    __v: 0
-  },
-  {
-    _id: { $oid: "6866c97b0e4951dfa98b4bad" },
-    userImage: "/placeholder.svg?height=64&width=64",
-    name: "ARIF HOSSAIN",
-    text:
-      "Joining CodeKPI was the best decision! Learned a ton from real-world projects. The mentorship and community support here is incredible. Every workshop teaches something new and practical.",
-    rating: 5,
-    status: true,
-    department: "CST",
-    session: "2022-23",
-    shift: "Day",
-    createdAt: { $date: "2025-07-02T15:30:20.022Z" },
-    updatedAt: { $date: "2025-07-02T15:30:20.022Z" },
-    __v: 0
-  },
-  {
-    _id: { $oid: "6866c97b0e4951dfa98b4bae" },
-    userImage: "/placeholder.svg?height=64&width=64",
-    name: "FATIMA KHAN",
-    text:
-      "The UI/UX workshops at CodeKPI completely changed my perspective on design. Now I can create beautiful and functional interfaces. The community is so supportive!",
-    rating: 5,
-    status: true,
-    department: "IT",
-    session: "2023-24",
-    shift: "Evening",
-    createdAt: { $date: "2025-07-01T12:15:10.022Z" },
-    updatedAt: { $date: "2025-07-01T12:15:10.022Z" },
-    __v: 0
-  },
-  {
-    _id: { $oid: "6866c97b0e4951dfa98b4baf" },
-    userImage: "/placeholder.svg?height=64&width=64",
-    name: "RAHMAN UDDIN",
-    text:
-      "From zero programming knowledge to building full-stack applications - CodeKPI made it possible. The step-by-step guidance and hands-on projects are amazing.",
-    rating: 4,
-    status: true,
-    department: "CST",
-    session: "2023-24",
-    shift: "Day",
-    createdAt: { $date: "2025-06-30T09:45:30.022Z" },
-    updatedAt: { $date: "2025-06-30T09:45:30.022Z" },
-    __v: 0
-  },
-  {
-    _id: { $oid: "6866c97b0e4951dfa98b4bb0" },
-    userImage: "/placeholder.svg?height=64&width=64",
-    name: "SARAH AHMED",
-    text:
-      "The AI/ML workshops opened up a whole new world for me. Now I'm working on machine learning projects and loving every moment of it. Thank you CodeKPI!",
-    rating: 5,
-    status: true,
-    department: "EEE",
-    session: "2022-23",
-    shift: "Day",
-    createdAt: { $date: "2025-06-29T16:20:45.022Z" },
-    updatedAt: { $date: "2025-06-29T16:20:45.022Z" },
-    __v: 0
-  },
-  {
-    _id: { $oid: "6866c97b0e4951dfa98b4bb1" },
-    userImage: "/placeholder.svg?height=64&width=64",
-    name: "KARIM HASSAN",
-    text:
-      "CodeKPI's project-based learning approach is fantastic. I've built multiple web applications and gained real industry experience. Highly recommend to all students!",
-    rating: 5,
-    status: true,
-    department: "IT",
-    session: "2024-25",
-    shift: "Evening",
-    createdAt: { $date: "2025-06-28T14:10:15.022Z" },
-    updatedAt: { $date: "2025-06-28T14:10:15.022Z" },
-    __v: 0
-  }
-]
-
-
-
+const REVIEWS_PER_LOAD = 3
 
 const Reviews = ({ className = "" }) => {
   const [displayedReviews, setDisplayedReviews] = useState([])
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
+  const [reviewsData, setReviewsData] = useState([])
 
-  const REVIEWS_PER_LOAD = 3
+  const axios = useAxios()
 
-  // Load reviews function
-  const loadReviews = async (offset = 0) => {
-    setLoading(true)
+const loadReviews = (offset = 0, data = reviewsData) => {
+  setLoading(true)
+  new Promise(resolve => setTimeout(resolve, 1000))
+  const newReviews = data.slice(offset, offset + REVIEWS_PER_LOAD)
+  const hasMoreReviews = offset + REVIEWS_PER_LOAD < data.length
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000))
+  setDisplayedReviews(prev => [...prev, ...newReviews])
+  setHasMore(hasMoreReviews)
+  setLoading(false)
+}
 
-    const newReviews = sampleReviews.slice(offset, offset + REVIEWS_PER_LOAD)
-    const hasMoreReviews = offset + REVIEWS_PER_LOAD < sampleReviews.length
-
-    setDisplayedReviews(prev => [...prev, ...newReviews])
-    setHasMore(hasMoreReviews)
-    setLoading(false)
+useEffect(() => {
+  const fetchReviews = async () => {
+    try {
+      setLoading(true)
+      const res = await axios.get("/review")
+      const data = res.data.data
+      setReviewsData(data)
+      loadReviews(0, data) // ✅ Call after setting data
+    } catch (error) {
+      console.error("Failed to fetch reviews:", error)
+    }
   }
 
-  // Initial load
-  React.useEffect(() => {
-    loadReviews(0)
-  }, [])
+  fetchReviews()
+}, [])
 
   const handleLoadMore = () => {
-    loadReviews(displayedReviews.length)
+    setLoading(true)
+    loadReviews(displayedReviews.length, reviewsData)
   }
 
-  const totalReviews = sampleReviews.length
   const averageRating =
-    sampleReviews.reduce((acc, review) => acc + review.rating, 0) /
-    sampleReviews.length
-
+    reviewsData.length > 0
+      ? reviewsData.reduce((acc, review) => acc + review.rating, 0) / reviewsData.length
+      : 0
+console.log(displayedReviews)
   return (
     <section
       className={`py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 ${className}`}
@@ -189,7 +89,7 @@ const Reviews = ({ className = "" }) => {
           <div className="flex justify-center gap-8 text-center">
             <div>
               <div className="text-3xl font-bold text-orange-500">
-                {totalReviews}+
+                {reviewsData.length || 0}+
               </div>
               <div className="text-sm text-gray-500">Happy Students</div>
             </div>
@@ -207,11 +107,13 @@ const Reviews = ({ className = "" }) => {
 
         {/* Reviews Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {displayedReviews.map(review => (
-            <ReviewCard key={review._id.$oid} review={review} />
+          {displayedReviews.map((review, index) => (
+            <ReviewCard
+              key={review?._id}
+              review={review}
+            />
           ))}
 
-          {/* Loading Cards */}
           {loading &&
             [...Array(REVIEWS_PER_LOAD)].map((_, index) => (
               <SkeletonCard key={`loading-${index}`} />
@@ -244,12 +146,12 @@ const Reviews = ({ className = "" }) => {
             <p className="text-gray-500">You&apos;ve seen all reviews! 🎉</p>
             <p className="text-sm text-gray-400 mt-2">
               Want to share your experience?{" "}
-              <a
-                href="/submit-review"
+              <Link
+                href="/reviews/write"
                 className="text-orange-500 hover:text-orange-600 underline"
               >
                 Submit a review
-              </a>
+              </Link>
             </p>
           </div>
         )}

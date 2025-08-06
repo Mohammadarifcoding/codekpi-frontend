@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge"
 import Rating from "@/components/ui/Rating"
 import { MessageSquare } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 
 const ReviewCard = ({ review }) => {
@@ -14,7 +15,7 @@ const ReviewCard = ({ review }) => {
   }
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+    <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col">
       {/* Header */}
       <div className="flex items-start gap-4 mb-4">
         {/* Profile Image */}
@@ -49,16 +50,16 @@ const ReviewCard = ({ review }) => {
             <Rating value={review.rating} />
             <span className="text-gray-400 text-sm">•</span>
             <span className="text-gray-500 text-sm">
-              {formatDate(review.createdAt.$date)}
+              {formatDate(review.createdAt)}
             </span>
           </div>
         </div>
       </div>
 
       {/* Review Text */}
-      <div className="mb-4">
+      <div className="mb-4 flex-grow">
         <p className="text-gray-600 leading-relaxed whitespace-pre-line">
-          {review.text}
+          {review.text?.length < 270 ? review.text : review.text?.slice(0,250) + '...'} <Link href={`/reviews/${review._id}`} className="text-orange-500 hover:underline">Read More</Link>
         </p>
       </div>
 
