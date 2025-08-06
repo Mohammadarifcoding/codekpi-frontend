@@ -10,6 +10,7 @@ import SkeletonCard from "@/components/shared/skeleton/SkeletonCard"
 import Link from "next/link"
 import useAxios from "@/hooks/useAxios"
 
+
 const REVIEWS_PER_LOAD = 3
 
 const Reviews = ({ className = "" }) => {
@@ -31,28 +32,52 @@ const loadReviews = (offset = 0, data = reviewsData) => {
   setLoading(false)
 }
 
+
 useEffect(() => {
   let check = true
-
   const fetchReviews = async () => {
     try {
       setLoading(true)
+
+      const cachedData = localStorage.getItem("reviews_cache")
+      const cacheTimestamp = localStorage.getItem("reviews_cache_timestamp")
+
+      const oneDay = 24 * 60 * 60 * 1000
+      const now = new Date().getTime()
+
+      if (cachedData && cacheTimestamp && now - parseInt(cacheTimestamp) < oneDay) {
+        const parsed = JSON.parse(cachedData)
+        setReviewsData(parsed)
+        loadReviews(0, parsed)
+        setLoading(false)
+        return
+      }
+
       const res = await axios.get("/review")
       const data = res.data.data
+
+      // Save to cache
+      localStorage.setItem("reviews_cache", JSON.stringify(data))
+      localStorage.setItem("reviews_cache_timestamp", now.toString())
+
       setReviewsData(data)
-      loadReviews(0, data) // ✅ Call after setting data
+      loadReviews(0, data)
+      setLoading(false)
     } catch (error) {
       console.error("Failed to fetch reviews:", error)
+      setLoading(false)
     }
   }
+
   
- if(check){
+   if(check){
      fetchReviews()
-     check = false
  }
- 
-// eslint-disable-next-line react-hooks/exhaustive-deps
+return ()=> check = false
 }, [])
+
+
+
 
   const handleLoadMore = () => {
     setLoading(true)
