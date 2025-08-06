@@ -32,6 +32,8 @@ const loadReviews = (offset = 0, data = reviewsData) => {
 }
 
 useEffect(() => {
+  let check = true
+
   const fetchReviews = async () => {
     try {
       setLoading(true)
@@ -43,8 +45,13 @@ useEffect(() => {
       console.error("Failed to fetch reviews:", error)
     }
   }
-
-  fetchReviews()
+  
+ if(check){
+     fetchReviews()
+     check = false
+ }
+ 
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
 
   const handleLoadMore = () => {
@@ -53,10 +60,9 @@ useEffect(() => {
   }
 
   const averageRating =
-    reviewsData.length > 0
+    reviewsData?.length > 0
       ? reviewsData.reduce((acc, review) => acc + review.rating, 0) / reviewsData.length
       : 0
-console.log(displayedReviews)
   return (
     <section
       className={`py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 ${className}`}
@@ -89,7 +95,7 @@ console.log(displayedReviews)
           <div className="flex justify-center gap-8 text-center">
             <div>
               <div className="text-3xl font-bold text-orange-500">
-                {reviewsData.length || 0}+
+                {100}+
               </div>
               <div className="text-sm text-gray-500">Happy Students</div>
             </div>

@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 
-const ReviewCard = ({ review }) => {
+const ReviewCard = ({ review , show = false}) => {
   const formatDate = dateString => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -59,7 +59,12 @@ const ReviewCard = ({ review }) => {
       {/* Review Text */}
       <div className="mb-4 flex-grow">
         <p className="text-gray-600 leading-relaxed whitespace-pre-line">
-          {review.text?.length < 270 ? review.text : review.text?.slice(0,250) + '...'} <Link href={`/reviews/${review._id}`} className="text-orange-500 hover:underline">Read More</Link>
+          {review.text?.length < 270 || show ? review.text : <>
+          {review.text?.slice(0,250)}  <Link href={`/reviews/view/${review._id}`} className="text-orange-500 hover:underline">Read More</Link>
+          
+          
+          
+          </> }
         </p>
       </div>
 
