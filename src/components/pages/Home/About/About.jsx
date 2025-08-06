@@ -35,12 +35,13 @@ const variants = () => {
 
   return (
     <section
+    id="about"
       className={`relative py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 overflow-hidden`}
       aria-labelledby="about-heading"
     >
       {/* <FloatingElements /> */}
-      <CodeParticles />
-      <FloatingTechIcons />
+      {/* <CodeParticles />
+      <FloatingTechIcons /> */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <MotionVariantsDiv

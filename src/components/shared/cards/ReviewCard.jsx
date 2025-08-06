@@ -1,63 +1,77 @@
-import { Star } from "lucide-react";
-import Image from "next/image";
-import React, { useState } from "react";
-import { FaQuoteLeft } from "react-icons/fa6";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge"
+import Rating from "@/components/ui/Rating"
+import { MessageSquare } from "lucide-react"
+import Image from "next/image"
 
-const ReviewCard = ({ name, time, rating, text, imageUrl }) => {
-  const [showModal, setShowModal] = useState(false);
+
+const ReviewCard = ({ review }) => {
+  const formatDate = dateString => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    })
+  }
 
   return (
-      <div className="w-full max-w-md mx-auto bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
-        <div className="p-6 pt-8">
-          <div className="flex items-center space-x-4 mb-4">
-            <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-100">
-              <Image src={imageUrl} alt={name} fill className="object-cover" />
-            </div>
-            <div>
-              <h3 className="font-medium text-gray-900 english">{name}</h3>
-              <p className="text-sm text-gray-500 english">{time}</p>
-            </div>
-          </div>
+    <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+      {/* Header */}
+      <div className="flex items-start gap-4 mb-4">
+        {/* Profile Image */}
+        <Image
+          src={review.userImage || "/placeholder.svg?height=48&width=48"}
+          alt={review.name}
+          className="w-12 h-12 rounded-full object-cover border-2 border-orange-200"
+          width={60}
+          height={60}
+        />
 
-          <div className="flex items-center mb-3">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`w-4 h-4 ${
-                  i < rating
-                    ? "text-yellow-400 fill-yellow-400"
-                    : "text-gray-200"
-                }`}
-              />
-            ))}
+        {/* User Info */}
+        <div className="flex-1">
+          <h3 className="font-bold text-gray-900 text-lg mb-1">
+            {review.name}
+          </h3>
+          <div className="flex flex-wrap gap-2 mb-2">
+            <Badge
+              variant="secondary"
+              className="bg-orange-100 text-orange-700 border-orange-200 text-xs"
+            >
+              {review.department}
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-teal-100 text-teal-700 border-teal-200 text-xs"
+            >
+              {review.session}
+            </Badge>
           </div>
-
-          <p className="text-gray-700 text-sm leading-relaxed english">
-            {text.length > 250 ? (
-              <span>
-                {text.slice(0, 250)}...
-                <Dialog >
-                  <DialogTrigger asChild>
-                    <span className="text-primary hover:underline cursor-pointer">
-                      see more
-                    </span>
-                  </DialogTrigger>
-                  <DialogContent className="bg-white rounded-lg " >
-                    <DialogHeader>
-                      <DialogTitle>Full Review</DialogTitle>
-                    </DialogHeader>
-                    <p className="text-gray-700 leading-relaxed text-sm">{text}</p>
-                  </DialogContent>
-                </Dialog>
-              </span>
-            ) : (
-              text
-            )}
-          </p>
+          <div className="flex items-center gap-2">
+            <Rating value={review.rating} />
+            <span className="text-gray-400 text-sm">•</span>
+            <span className="text-gray-500 text-sm">
+              {formatDate(review.createdAt.$date)}
+            </span>
+          </div>
         </div>
       </div>
-  );
-};
 
-export default ReviewCard;
+      {/* Review Text */}
+      <div className="mb-4">
+        <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+          {review.text}
+        </p>
+      </div>
+
+      {/* Footer */}
+      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+        <span className="text-sm text-gray-500">{review.shift}</span>
+        <div className="flex items-center gap-1 text-sm text-gray-500">
+          <MessageSquare className="w-4 h-4" />
+          <span>Verified</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default ReviewCard

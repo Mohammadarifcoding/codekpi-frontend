@@ -8,6 +8,7 @@ import CodeParticles from "@/components/shared/animation/CodeParticles"
 import {MotionVariantsDiv, MotionVariantsP} from "@/components/shared/animation/AnimationVariants/MotionVariants"
 import { Badge } from "@/components/ui/badge"
 import { variants } from "@/components/shared/animation/AnimationVariants/BannerVariants"
+import Link from "next/link"
 
 
 const Banner = () => {
@@ -64,7 +65,7 @@ const Banner = () => {
 
 </HeadingBadge>
 
-              <MotionVariantsDiv variants={variants.item} className="sm:mb-8 mb-20 text-center  ">
+              <MotionVariantsDiv variants={variants.item} className="sm:mb-8 mb-4 text-center  ">
   <h1
     id="banner-heading"
     className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight"
@@ -100,7 +101,7 @@ const Banner = () => {
   className="mb-16 flex flex-row items-center justify-center gap-4 sm:flex-row"
 >
  
-
+<Link href={'/join-now'}>
 <CustomButton
   type="primary"
   className="h-10 md:h-12 px-4 md:px-8 text-sm md:text-base"
@@ -109,7 +110,9 @@ const Banner = () => {
   Join Club
 </CustomButton> 
 
- <CustomButton
+</Link>
+
+<Link href={'#about'}><CustomButton
   type="secondary"
   className="h-10 md:h-12 px-4 md:px-8 text-sm md:text-base"
  icon={<ArrowRight
@@ -117,7 +120,9 @@ const Banner = () => {
         />}
 >
   About Us
-</CustomButton>
+</CustomButton></Link>
+
+ 
 
 </MotionVariantsDiv>
 

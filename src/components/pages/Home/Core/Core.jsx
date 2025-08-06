@@ -2,7 +2,7 @@ import React from "react";
 import { Lightbulb, Users, Heart, BookOpen } from "lucide-react";
 import Container from "@/components/shared/Container";
 import  HeadingBadge from '@/components/shared/Heading/HeadingBadge';
-import { MotionVariantsDiv, MotionVariantsH2, MotionVariantsP } from "@/components/shared/animation/AnimationVariants/MotionVariants";
+import { div, MotionVariantsDiv, MotionVariantsH2, MotionVariantsP } from "@/components/shared/animation/AnimationVariants/MotionVariants";
 
 
 
@@ -52,7 +52,6 @@ const VALUES = [
       "We code because we care. It’s fun, exciting, and we’re here to build things that matter.",
   },
 ];
-   // Accessibility-first: skip animations
 
   return (
     <Container className="my-10 sm:my-16 ">
@@ -67,7 +66,7 @@ const VALUES = [
 
          
       <div className="text-center max-w-4xl mx-auto mb-12">
-        <MotionVariantsDiv
+        <div
           variants={variants.container}
           initial="hidden"
           animate={"visible"}
@@ -82,7 +81,7 @@ const VALUES = [
           <MotionVariantsP variants={variants.item} className="md:text-xl sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
             These are the beliefs that guide everything we do at CodeKPI.
           </MotionVariantsP>
-        </MotionVariantsDiv>
+        </div>
       </div>
 
       <MotionVariantsDiv
@@ -93,7 +92,7 @@ const VALUES = [
         className="flex md:flex-row md:flex-nowrap gap-4 flex-wrap justify-center items-center"
       >
         {VALUES.map((value) => (
-<MotionVariantsDiv
+<div
   key={value.title}
   variants={variants.item}
   className="group w-full max-w-sm rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-md p-6 shadow-sm hover:shadow-xl transition-all duration-300 ease-out hover:border-gray-300"
@@ -117,7 +116,7 @@ const VALUES = [
 
   {/* Subtle hover line */}
   <div className="mt-5 h-1 w-10 mx-auto bg-gradient-to-r from-secondary to-secondary rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300" />
-</MotionVariantsDiv>
+</div>
 
         ))}
       </MotionVariantsDiv>

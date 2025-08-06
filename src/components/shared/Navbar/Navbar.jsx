@@ -14,14 +14,28 @@ import Container from "../Container";
 import CustomButton from "../Button/CustomButton";
 
 export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
 
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [router.pathname]);
 
   return (
     <Container>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent backdrop-blur-md shadow-sm sm:h-[70px] h-16"
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          isScrolled
+            ? "bg-white backdrop-blur-md shadow-sm sm:h-[58px] h-12"
+            : "bg-transparent sm:h-[70px] h-16"
         )}
       >
         <div className="flex items-center justify-between container mx-auto h-full">
@@ -29,10 +43,14 @@ export default function Navbar() {
           <Link href="/" className="flex-shrink-0">
             <Image
               src={logo || "/placeholder.svg"}
-              width={ 100}
-              height={ 35}
+              width={isScrolled ? 90 : 100}
+              height={isScrolled ? 30 : 35}
               alt="Company Logo"
-              className={`transition-all duration-300 hover:scale-105 h-auto sm:w-[80px] w-[60px]`}
+              className={`transition-all duration-300 hover:scale-105 h-auto ${
+                isScrolled
+                  ? "sm:w-[80px] w-[60px]"
+                  : "sm:w-[100px] w-[70px]"
+              }`}
               priority
             />
           </Link>
