@@ -5,7 +5,32 @@ import { Analytics } from "@vercel/analytics/react";
 import ReduxWrapper from "../../Provider/ReduxWrapper";
 export const metadata = {
   title: "CodeKpi",
-  description: "Ready to showcase your potential by your design skills ",
+  description:
+    "Gain the skills and knowledge you need to succeed in today's competitive job market.",
+  openGraph: {
+    title: "Codekpi ",
+    description: "Let's code with Codekpi",
+    url: "https://www.codekpi.club/",
+    siteName: "Codekpi",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dnjlwwcmo/image/upload/v1754473355/og_gxdd94.png",
+        width: 1200,
+        height: 630,
+        alt: "CodeKpi",
+      },
+    ],
+    twitter: {
+      card: "Codekpi",
+      title: "Codekpi",
+      description: "Let's code with Codekpi",
+      images: [
+        "https://res.cloudinary.com/dnjlwwcmo/image/upload/v1754473355/og_gxdd94.png",
+      ],
+    },
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -14,10 +39,6 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <head>
           <link rel="icon" href="/favicon.ico" />
-          <meta
-            name="description"
-            content="Gain the skills and knowledge you need to succeed in today's competitive job market."
-          />
         </head>
 
         <body className="english">
@@ -29,3 +50,4 @@ export default function RootLayout({ children }) {
     </ReduxWrapper>
   );
 }
+// {"orgId":"team_6iM3ycdvBV4YAVgb30qJDD6K","projectId":"prj_9PvudQcVA8xwMbK16s9mw8Mw9co9"}

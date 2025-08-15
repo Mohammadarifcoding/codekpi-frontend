@@ -25,7 +25,6 @@ const Reviews = () => {
     };
     GetReviewData();
   }, []);
-  console.log(review);
 
   return (
     <div id="review" className="w-full container animate-scroll rounded-lg mx-auto bangla  p-3 *:mix-blend-difference text-black my-10">

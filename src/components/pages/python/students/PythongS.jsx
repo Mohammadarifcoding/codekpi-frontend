@@ -10,37 +10,55 @@ import { ChevronLeft, ChevronRight, Search, Users } from 'lucide-react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { FaCrown } from "react-icons/fa6";
 const PythongS = () => {
-    const [searchQuery, setSearchQuery] = useState("")
-   const [filteredData,setFilteredData] = useState([])
 
-   useEffect(()=>{
-    const filtered = allStudents.filter((student) =>
-      student.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      student.name.toLowerCase().includes(searchQuery.toLowerCase())
-    ).sort((a,b)=> b.point - a.point);
-    setFilteredData(filtered);
-   },[searchQuery])
+  //   const [searchQuery, setSearchQuery] = useState("")
+  //  const [filteredData,setFilteredData] = useState([])
+
+  //  useEffect(()=>{
+  //   const filtered = allStudents.filter((student) =>
+  //     student.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     student.name.toLowerCase().includes(searchQuery.toLowerCase())
+  //   ).sort((a,b)=> b.point - a.point);
+  //   setFilteredData(filtered);
+  //  },[searchQuery])
    
-   console.log(filteredData)
   
   
-    const handleSearchChange = (e) => {
-      setSearchQuery(e.target.value)
-    }
+  //   const handleSearchChange = (e) => {
+  //     setSearchQuery(e.target.value)
+  //   }
   
-    // Get point badge color based on ranges
-    const getPointColor = (point) => {
-      if (previous < current) return 'bg-green-600'
-      if (previous > current) return 'bg-red-600'
-      if (previous === current) return 'bg-green-600'
-    }
+  //   // Get point badge color based on ranges
+  //   const getPointColor = (point) => {
+  //     if (previous < current) return 'bg-green-600'
+  //     if (previous > current) return 'bg-red-600'
+  //     if (previous === current) return 'bg-green-600'
+  //   }
 
-    // Get text color based on previous vs current points
-    const getTextColor = (previous, current) => {
-      if (previous < current) return 'text-green-600'
-      if (previous > current) return 'text-red-600'
-      return ''
-    }
+  //   // Get text color based on previous vs current points
+  //   const getTextColor = (previous, current) => {
+  //     if (previous < current) return 'text-green-600'
+  //     if (previous > current) return 'text-red-600'
+  //     return ''
+  //   }
+let lastRank = 0;
+let lastPoints = null;
+  const sorted = allStudents?.sort((a, b) => b.point - a.point)
+  const data = sorted.map((student, idx) => {
+   let rank;
+  if(idx == 0){
+    rank = 1
+  }
+  else if(sorted[idx].point == sorted[idx-1].point){
+    rank = lastRank
+  }
+  else{
+    rank = idx + 1
+  }
+  lastRank = rank
+  lastPoints = student.point
+    return {...student, Rank: rank}
+  });
     return (
         <main className="container mx-auto pb-10 px-4">
       <div className="flex flex-col gap-8">
@@ -52,7 +70,7 @@ const PythongS = () => {
           <div className="flex items-center gap-2">
             <Badge variant="outline" className="flex items-center gap-1">
               <Users size={14} />
-              <span>{filteredData.length} Applicants</span>
+              <span>{allStudents.length} Applicants</span>
             </Badge>
           </div>
         </div>
@@ -66,8 +84,7 @@ const PythongS = () => {
                   type="search"
                   placeholder="Search by ID or name..."
                   className="w-full pl-8"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
+
                 />
               </div>
 
@@ -83,23 +100,25 @@ const PythongS = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredData.length > 0 ? (
-                    filteredData.map((student,idx) => (
+                  {data.length > 0 ? (
+                    data.map((student,idx) => (
                       <TableRow 
                         key={idx} 
                         className={student.disqualify ? "bg-red-100" : "hover:bg-slate-50"}
                       >
-                        <TableCell className="font-medium">{idx > 9 ? idx + 1:<span><FaCrown className="text-yellow-600"/></span>}</TableCell>
+                        {/* <TableCell className="font-medium">{idx > 9 ? idx + 1:<span><FaCrown className="text-yellow-600"/></span>}</TableCell> */}
+                        {/* <TableCell>{student.point == allStudents[idx - 1].student.point   }</TableCell> */}
+                        <TableCell>{student.Rank}</TableCell>
                         <TableCell>{student.name}</TableCell>
                         <TableCell className="text-right">
                           {student.disqualify ? (
                             <span className="text-red-600">{student.disqualifyReason}</span>
                           ) : (
                             <div className="flex items-center justify-end gap-2">
-                              <span className={getTextColor(student.previousPoint, student.point)}>
+                              <span >
                                 {student.point}
                               </span>
-                              <div className={`w-2 h-2 rounded-full ${getTextColor(student.previousPoint, student.point)}`}></div>
+                              <div className={`w-2 h-2 rounded-full `}></div>
                             </div>
                           )}
                         </TableCell>
@@ -115,47 +134,6 @@ const PythongS = () => {
                 </TableBody>
               </Table>
             </div>
-
-            {/* <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-sm text-muted-foreground">
-                Showing <strong>{filteredData.length > 0 ? startIndex + 1 : 0}</strong> to{" "}
-                <strong>{Math.min(endIndex, filteredData.length)}</strong> of{" "}
-                <strong>{filteredData.length}</strong> applicants
-              </div>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={goToPreviousPage}
-                  disabled={currentPage === 1}
-                  className="flex items-center gap-1"
-                >
-                  <ChevronLeft size={16} />
-                </Button>
-                <div className="flex items-center gap-1 px-2">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                    <Button
-                      key={page}
-                      variant={page === currentPage ? "default" : "outline"}
-                      size="sm"
-                      className="w-8 h-8 p-0"
-                      onClick={() => setCurrentPage(page)}
-                    >
-                      {page}
-                    </Button>
-                  ))}
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={goToNextPage}
-                  disabled={currentPage === totalPages}
-                  className="flex items-center gap-1"
-                >
-                   <ChevronRight size={16} />
-                </Button>
-              </div>
-            </div> */}
           </CardContent>
         </Card>
       </div>

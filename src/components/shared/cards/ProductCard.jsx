@@ -31,7 +31,6 @@ const ProductCard = ({ name, price, discount, image, id }) => {
             return;
         }
         if (isInWishlist) {
-            console.log(id, "this is id");
             const res = await deleteWhishlistSingle({ id });
             if (res?.data?.success) {
                 toast.success(`${res?.data?.message? "Product successfully removed from your wishlist.": res?.data?.message}`); 

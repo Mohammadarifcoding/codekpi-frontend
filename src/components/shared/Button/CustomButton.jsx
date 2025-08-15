@@ -3,9 +3,8 @@ import { Button } from '@/components/ui/button';
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
 
-const CustomButton = ({size ="sm" , type="primary", children, className, icon}) => {
+const CustomButton = ({size ="sm" , type="primary", children, className, icon,...rest}) => {
     
     return (
        <div>
@@ -16,6 +15,7 @@ const CustomButton = ({size ="sm" , type="primary", children, className, icon}) 
   transition={{ type: "spring", stiffness: 400, damping: 20 }}>
 
    <Button
+   {...rest}
    size={size}
   className={cn(
   "group relative overflow-hidden font-semibold bg-gradient-to-r from-secondary to-secondary transition-all duration-500 ease-in-out",
@@ -46,6 +46,7 @@ const CustomButton = ({size ="sm" , type="primary", children, className, icon}) 
   >
     <Button
        size={size}
+       {...rest}
       variant="outline"
         className={cn(
     "group relative font-semibold border-gray-300 hover:border-gray-400 transition-all duration-300 ease-in-out",

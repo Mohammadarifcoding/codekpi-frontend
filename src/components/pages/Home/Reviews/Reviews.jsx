@@ -39,26 +39,9 @@ useEffect(() => {
     try {
       setLoading(true)
 
-      const cachedData = localStorage.getItem("reviews_cache")
-      const cacheTimestamp = localStorage.getItem("reviews_cache_timestamp")
-
-      const oneDay = 24 * 60 * 60 * 1000
-      const now = new Date().getTime()
-
-      if (cachedData && cacheTimestamp && now - parseInt(cacheTimestamp) < oneDay) {
-        const parsed = JSON.parse(cachedData)
-        setReviewsData(parsed)
-        loadReviews(0, parsed)
-        setLoading(false)
-        return
-      }
 
       const res = await axios.get("/review")
       const data = res.data.data
-
-      // Save to cache
-      localStorage.setItem("reviews_cache", JSON.stringify(data))
-      localStorage.setItem("reviews_cache_timestamp", now.toString())
 
       setReviewsData(data)
       loadReviews(0, data)

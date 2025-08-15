@@ -48,7 +48,6 @@ CodeKPI Programming Club-এর ২০২৫ ওরিয়েন্টেশ�
       toast.success("Successfully completed Call")
     }catch(err){
       toast.error("Something went wrong")
-      console.log(err)
     }
   }
   const MessageCompletePart = async(id)=>{
@@ -60,7 +59,6 @@ CodeKPI Programming Club-এর ২০২৫ ওরিয়েন্টেশ�
       toast.success("Successfully completed Call")
     }catch(err){
       toast.error("Something went wrong")
-      console.log(err)
 
     }
   }

@@ -5,7 +5,7 @@ import CustomButton from "@/components/shared/Button/CustomButton"
 import HeadingBadge from "@/components/shared/Heading/HeadingBadge"
 import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
 import CodeParticles from "@/components/shared/animation/CodeParticles"
-import {MotionVariantsDiv, MotionVariantsP} from "@/components/shared/animation/AnimationVariants/MotionVariants"
+// import {div, p} from "@/components/shared/animation/AnimationVariants/MotionVariants"
 import { Badge } from "@/components/ui/badge"
 import { variants } from "@/components/shared/animation/AnimationVariants/BannerVariants"
 import Link from "next/link"
@@ -39,25 +39,25 @@ const Banner = () => {
       {/* Main Content */}
       <div className="relative z-10 flex min-h-screen items-center">
         <div className="w-full px-4 sm:pb-20 pb-4  pt-24 sm:px-6 lg:px-8">
-          <MotionVariantsDiv variants={variants.container} initial="hidden" animate="visible" className="mx-auto max-w-5xl">
+          <div variants={variants.container} initial="hidden" animate="visible" className="mx-auto max-w-5xl">
             <div className="text-center">
               {/* Premium Badge */}
-<MotionVariantsDiv variants={variants.item} className="mb-8 sm:block hidden">
+<div variants={variants.item} className="mb-8 sm:block hidden">
   <Badge
     variant="secondary"
     className="mb-6 inline-flex hover:bg-primary/20 cursor-pointer items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm text-primary font-medium"
   >
     
   </Badge>
-</MotionVariantsDiv>
+</div>
 
 <HeadingBadge>
-<MotionVariantsDiv
+<div
       animate={{ rotate: 360 }}
       transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
     >
       <Sparkles className="h-4 w-4" />
-    </MotionVariantsDiv>
+    </div>
 
     <span>Empowering New Tech Innovation</span>
 
@@ -65,27 +65,26 @@ const Banner = () => {
 
 </HeadingBadge>
 
-              <MotionVariantsDiv variants={variants.item} className="sm:mb-8 mb-4 text-center  ">
+              <div variants={variants.item} className="sm:mb-8 mb-4 text-center  ">
   <h1
     id="banner-heading"
     className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight"
   >
     <span className="flex sm:gap-2 gap-1 flex-col sm:flex-row  text-center items-center justify-center"> 
 
-       <span className="block text-gray-900">Welcome to</span>
+       <span className="block text-gray-900">Welcome to </span>
     <span className="block bg-secondary bg-clip-text text-4xl md:text-5xl lg:text-6xl text-transparent">
-      CodeKPI
-    </span>
+      CodeKPI </span>
     </span>
    
     <span className="block text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-gray-700 mt-2">
       Where Programming Meets Innovation
     </span>
   </h1>
-</MotionVariantsDiv>
+</div>
 
 {/* Description */}
-<MotionVariantsP
+<p
   variants={variants.item}
   className="mx-auto mb-10  max-w-2xl text-base sm:text-lg text-gray-600 font-base leading-relaxed text-center"
 >
@@ -93,10 +92,10 @@ const Banner = () => {
   <span className="font-mono text-blue-600"> Python</span>, 
   <span className="font-mono text-yellow-600"> JavaScript</span>, 
   <span className="font-mono text-blue-500"> AI</span> and more — from passionate students and mentors.
-</MotionVariantsP>
+</p>
 
 {/* CTA */}
-<MotionVariantsDiv
+<div
   variants={variants.item}
   className="mb-16 flex flex-row items-center justify-center gap-4 sm:flex-row"
 >
@@ -124,12 +123,12 @@ const Banner = () => {
 
  
 
-</MotionVariantsDiv>
+</div>
 
               {/* Stats Section */}
               <StatsSection />
             </div>
-          </MotionVariantsDiv>
+          </div>
         </div>
       </div>
 

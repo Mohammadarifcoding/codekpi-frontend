@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://codekpi.club
+
+# Sitemaps
+Sitemap: https://codekpi.club/sitemap.xml

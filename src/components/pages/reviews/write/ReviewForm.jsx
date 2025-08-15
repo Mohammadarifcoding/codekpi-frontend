@@ -62,7 +62,7 @@ const ReviewForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("https://code-kpi-backend.vercel.app/api/v1/review", data)
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/review`, data)
       if (res.data.success) setSubmitted(true)
       else throw new Error("Failed to submit review")
     } catch (error) {

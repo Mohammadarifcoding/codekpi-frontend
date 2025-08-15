@@ -4,7 +4,6 @@ import React from 'react';
 import UserCard from '../Users/UserCard';
 const Girls = () => {
 const {data } = useGetUsersQuery("female")
-console.log(data)
     return (
         <div className="container ">
           <h2 className="md:text-3xl text-2xl text-center pt-10 mb-4 font-semibold ">Users list down</h2>
