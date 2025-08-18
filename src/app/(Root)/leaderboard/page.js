@@ -1,4 +1,5 @@
 import Header from "@/components/pages/leaderboard/Header";
+import Leaderboard from "@/components/pages/leaderboard/Leaderboard";
 
 const page = () => {
   return (
@@ -7,6 +8,7 @@ const page = () => {
     >
       <div className="max-w-4xl mx-auto">
         <Header />
+        <Leaderboard />
       </div>
     </div>
   );

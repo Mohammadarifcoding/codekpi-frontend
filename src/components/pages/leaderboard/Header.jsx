@@ -11,7 +11,7 @@ const Header = ()=>{
       <Star className="h-4 w-4" />
     </div>
 
-    <span>Empowering New Tech Innovation</span>
+    <span> AI Workshop Leaderboard</span>
 
     <Code className="h-4 w-4" />
 
