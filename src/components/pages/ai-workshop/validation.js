@@ -1,17 +1,26 @@
 import z from "zod";
 const emptyToUndef = (v) => (v === "" ? undefined : v);
 export const WorkshopStudentValidation = z.object({
-  name: z
-    .string({ required_error: "Full name is required" })
-    .trim()
-    .min(2, { message: "Full name must be at least 2 characters" }),
-  email: z
-    .string({ required_error: "Email is required" })
-    .email({ message: "Enter a valid email address" }),
-  whatsApp: z
-    .string({ required_error: "WhatsApp number is required" })
-    .min(11, { message: "WhatsApp number must be at least 11 digits" })
-    .max(20, { message: "WhatsApp number cannot exceed 20 digits" }),
+  name: z.preprocess(
+    emptyToUndef,
+    z
+      .string({ required_error: "Full name is required" })
+      .trim()
+      .min(2, { message: "Full name must be at least 2 characters" })
+  ),
+  email: z.preprocess(
+    emptyToUndef,
+    z
+      .string({ required_error: "Email is required" })
+      .email({ message: "Enter a valid email address" })
+  ),
+  whatsApp: z.preprocess(
+    emptyToUndef,
+    z
+      .string({ required_error: "WhatsApp number is required" })
+      .min(11, { message: "WhatsApp number must be at least 11 digits" })
+      .max(20, { message: "WhatsApp number cannot exceed 20 digits" })
+  ),
   gender: z.preprocess(
     emptyToUndef,
     z.enum(["male", "female"], {
@@ -47,9 +56,12 @@ export const WorkshopStudentValidation = z.object({
     })
   ),
 
-  polytechnic: z
-    .string({ required_error: "Polytechnic name is required" })
-    .min(2, { message: "Polytechnic name must be at least 2 characters" }),
+  polytechnic: z.preprocess(
+    emptyToUndef,
+    z
+      .string({ required_error: "Polytechnic name is required" })
+      .min(2, { message: "Polytechnic name must be at least 2 characters" })
+  ),
 });
 export const WorkshopDefaultValues = {
   name: "",

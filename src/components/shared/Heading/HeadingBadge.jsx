@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 
-const HeadingBadge = ({children}) => {
+const HeadingBadge = ({children,type}) => {
        
     return (
          <motion.div variants={{
@@ -16,7 +16,7 @@ const HeadingBadge = ({children}) => {
   }} className="mb-6">
             <Badge
               variant="secondary"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 text-orange-700 border border-orange-200 hover:bg-orange-200 transition-colors"
+              className={`inline-flex items-center gap-2 px-4 py-2 ${type == "green" ? "bg-green-100 text-green-700 border border-green-200 hover:bg-green-200 transition-colors" : "bg-orange-100 text-orange-700 border border-orange-200 hover:bg-orange-200 transition-colors"}`}
             >
              {children}
             </Badge>

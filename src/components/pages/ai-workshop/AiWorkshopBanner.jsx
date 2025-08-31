@@ -1,5 +1,5 @@
 
-import { ArrowRight, Code, Sparkles } from "lucide-react"
+import { ArrowRight, Bot, Code, Sparkles } from "lucide-react"
 import CustomButton from "@/components/shared/Button/CustomButton"
 import HeadingBadge from "@/components/shared/Heading/HeadingBadge"
 import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
@@ -9,6 +9,10 @@ import Link from "next/link"
 import StatsSection from "../Home/Banner/StatsSection"
 
 const AiWorkshopBanner = () => {
+
+
+
+
   return (
     <section
       className={`relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50`}
@@ -44,12 +48,11 @@ const AiWorkshopBanner = () => {
       animate={{ rotate: 360 }}
       transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
     >
-      <Sparkles className="h-4 w-4" />
+      <Bot className="h-4 w-4" />
     </div>
 
-    <span>Empowering New Tech Innovation</span>
+    <span>Ultimate AI Workshop</span>
 
-    <Code className="h-4 w-4" />
 
 </HeadingBadge>
 
@@ -91,7 +94,7 @@ const AiWorkshopBanner = () => {
 <Link href={'/ai-workshop/join'}>
 <CustomButton
     type="primary"
-    className="h-10 md:h-12 px-4 md:px-8 text-sm md:text-base"
+    className="h-10 md:h-12 px-4 md:px-8 text-sm md:text-base w-full "
     icon={<Code className="h-5 w-5" />}
   >
     Register Free
