@@ -26,7 +26,7 @@ const StatsSection = () => {
           key={stat.label}
           variants={variants.item}
           whileHover={shouldReduceMotion ? {} : { scale: 1.04, y: -4 }}
-          className="group relative flex flex-col items-center justify-center text-center gap-2 rounded-xl p-6 border border-white/10 bg-white/10 backdrop-blur-md shadow-md hover:shadow-lg transition-all duration-300"
+          className="group relative flex flex-col items-center justify-center text-center gap-2 rounded-xl p-6 border border-white/10 bg-white/10  shadow-md hover:shadow-lg transition-all duration-300"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
 

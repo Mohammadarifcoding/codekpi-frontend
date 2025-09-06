@@ -10,14 +10,6 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import axios from "axios"
 
-// Notes:
-// - Removed the artificial 4s delay.
-// - Fixed error state usage (was `Error` instead of `error`).
-// - Rely on RHF's `isSubmitting` for loading state.
-// - Tightened field-level error styling (each field checks its own error).
-// - Added accessible error card with retry that clears error state.
-// - Disabled inputs while submitting to avoid double submissions.
-// - Minor visual refinements for consistency.
 
 const WorkshopForm = () => {
   const router = useRouter()
@@ -33,23 +25,26 @@ const WorkshopForm = () => {
   })
 
   const [error, setError] = useState(null)
+  const [loading,setLoading] = useState(false)
 
   const onSubmit = async (data) => {
     setError(null)
+    setLoading(true)
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/workshop/create`,
         data
       )
-
       if (res.status === 200 || res.status === 201) {
+       
+        router.push(`/ai-workshop/success?studentName=${encodeURIComponent(res.data.data.name)}&studentId=${encodeURIComponent(res.data.data.studentId)}`)
         reset()
-        router.push(`/ai-workshop/success?studentName=${encodeURIComponent(data.name)}`)
         return
       }
 
       setError({ message: "Registration failed. Please try again." })
     } catch (err) {
+      setLoading(false)
       const apiMsg = err?.response?.data?.message || err?.message
       setError({ message: apiMsg || "Something went wrong. Please try again." })
     }
@@ -60,7 +55,7 @@ const WorkshopForm = () => {
   // Error screen
   if (error) {
     return (
-      <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:p-8 p-5 shadow-xl mt-5 border border-white/20 sm:w-[500px] w-full">
+      <div className="bg-white/80  rounded-2xl sm:p-8 p-5 shadow-xl mt-5 border border-white/20 sm:w-[500px] w-full">
         <div className="flex flex-col items-center text-center gap-4">
           <div className="flex items-center gap-3">
             <AlertCircle className="w-6 h-6 text-red-500" />
@@ -79,10 +74,10 @@ const WorkshopForm = () => {
   }
 
   return (
-    <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl sm:p-8 p-5 shadow-xl mt-5 border border-white/20 sm:w-[500px] w-full">
+    <div className="relative bg-white/80 rounded-2xl sm:p-8 p-5 shadow-xl mt-5 border border-white/20 sm:w-[500px] w-full">
       {/* Submitting overlay */}
-      {isSubmitting && (
-        <div className="absolute inset-0 bg-white/70 backdrop-blur-sm rounded-2xl grid place-items-center z-10">
+      {loading && (
+        <div className="absolute inset-0 bg-white/70 rounded-2xl grid place-items-center z-10">
           <div className="text-center">
             <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
             <p className="text-gray-600 text-sm">Processing your registration…</p>

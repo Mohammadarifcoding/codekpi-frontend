@@ -1,6 +1,6 @@
 
 import TechIcon from "./TechIcon"
-import { techIcons } from "../technologyIcon/TechnologyIcon"
+// import { techIcons } from "../technologyIcon/TechnologyIcon"
 import { Code } from "lucide-react"
 import { AiIcons } from "../AiIcon/AiIcon"
 
@@ -17,7 +17,7 @@ const FloatingTechIcons = () => {
             delay={tech.delay}
             duration={8 + Math.random() * 4}
             size="sm:w-12 w-8 sm:h-12 h-8 md:w-16 md:h-16"
-            className="drop-shadow-lg"
+            className=""
           />
         </div>
       ))}

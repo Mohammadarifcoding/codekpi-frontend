@@ -2,6 +2,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Analytics } from "@vercel/analytics/react";
+import { Roboto } from "next/font/google";
 export const metadata = {
   title: "CodeKpi",
   description:
@@ -31,10 +32,13 @@ export const metadata = {
     type: "website",
   },
 };
-
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+});
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={roboto.className}>
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
@@ -47,4 +51,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-// {"orgId":"team_6iM3ycdvBV4YAVgb30qJDD6K","projectId":"prj_9PvudQcVA8xwMbK16s9mw8Mw9co9"}

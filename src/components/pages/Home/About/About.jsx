@@ -6,10 +6,7 @@ import { Button } from "@/components/ui/button"
 import HeadingBadge from "@/components/shared/Heading/HeadingBadge"
 import VideoPlayer from "@/components/shared/Player/VideoPlayer"
 import Link from "next/link"
-import CodeParticles from "@/components/shared/animation/CodeParticles"
-import FloatingTechIcons from "@/components/shared/FloatingTechIcons/FloatingTechIcons"
 import { cn } from "@/lib/utils"
-import { MotionVariantsDiv, MotionVariantsH2, MotionVariantsP } from "@/components/shared/animation/AnimationVariants/MotionVariants";
 import videoImage from '/src/assets/whybest/image.jpg'
 
 
@@ -44,7 +41,7 @@ const variants = () => {
       <FloatingTechIcons /> */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <MotionVariantsDiv
+        <div
           variants={variants.container}
           initial="hidden"
           animate={"visible"}
@@ -57,25 +54,23 @@ const variants = () => {
             </HeadingBadge>
          
 
-          <MotionVariantsH2
+          <h2
             id="about-heading"
-            variants={variants.item}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
           >
             See Our <span className="text-secondary">Story</span> in Action
-          </MotionVariantsH2>
+          </h2>
 
-          <MotionVariantsP variants={variants.item} className="md:text-xl sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="md:text-xl sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Watch how CodeKPI is transforming programming education at Khulna Polytechnic Institute and building the
             next generation of tech entrepreneur
-          </MotionVariantsP>
-        </MotionVariantsDiv>
+          </p>
+        </div>
 
         {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Video Section - Takes 2 columns */}
-          <MotionVariantsDiv
-            variants={variants.item}
+          <div
             initial="hidden"
             animate={"visible"}
             className="lg:col-span-2"
@@ -83,9 +78,8 @@ const variants = () => {
             <VideoPlayer image={videoImage} />
 
             {/* Video Description */}
-  <MotionVariantsDiv
-      variants={variants.item}
-      className="mt-8 rounded-2xl border border-white/20 bg-white/70 backdrop-blur-md shadow-xl px-6 py-8 sm:p-10"
+  <div
+      className="mt-8 rounded-2xl border border-white/20 bg-white/70  shadow-xl px-6 py-8 sm:p-10"
     >
       <div className="space-y-4 text-center sm:text-left">
         <h3 className="text-2xl font-bold text-gray-900 sm:text-3xl">
@@ -113,8 +107,8 @@ We started as a small group of friends who loved coding. Over time, CodeKPI beca
           </Link>
         </div>
       </div>
-    </MotionVariantsDiv>
-          </MotionVariantsDiv>
+    </div>
+          </div>
         </div>
       </div>
     </section>

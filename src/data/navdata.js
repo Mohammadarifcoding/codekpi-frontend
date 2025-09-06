@@ -1,7 +1,6 @@
 import { FaHome, FaCalendarAlt, FaUsers, FaEnvelope } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
 
-
 export const Navdata = [
   {
     route: "home",
@@ -19,7 +18,7 @@ export const Navdata = [
     icon: FaUsers, // Represents the club community
   },
   {
-    route: "join-now",
+    route: "/ai-workshop/join",
     name: "Join Now",
     icon: IoMdPersonAdd, // For reaching out to the club
   },

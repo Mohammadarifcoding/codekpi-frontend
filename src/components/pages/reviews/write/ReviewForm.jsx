@@ -102,7 +102,7 @@ const ReviewForm = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20"
+          className="bg-white/80  rounded-2xl p-8 shadow-xl border border-white/20"
         >
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <Controller name="userImage" control={control} render={({ field }) => (

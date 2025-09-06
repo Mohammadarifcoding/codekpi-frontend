@@ -23,7 +23,6 @@ const Reviews = ({ className = "" }) => {
 
 const loadReviews = (offset = 0, data = reviewsData) => {
   setLoading(true)
-  new Promise(resolve => setTimeout(resolve, 1000))
   const newReviews = data.slice(offset, offset + REVIEWS_PER_LOAD)
   const hasMoreReviews = offset + REVIEWS_PER_LOAD < data.length
 
@@ -34,12 +33,9 @@ const loadReviews = (offset = 0, data = reviewsData) => {
 
 
 useEffect(() => {
-  let check = true
   const fetchReviews = async () => {
     try {
       setLoading(true)
-
-
       const res = await axios.get("/review")
       const data = res.data.data
 
@@ -51,12 +47,7 @@ useEffect(() => {
       setLoading(false)
     }
   }
-
-  
-   if(check){
      fetchReviews()
- }
-return ()=> check = false
 }, [])
 
 

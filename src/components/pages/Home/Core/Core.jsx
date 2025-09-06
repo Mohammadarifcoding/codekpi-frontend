@@ -95,7 +95,7 @@ const VALUES = [
 <div
   key={value.title}
   variants={variants.item}
-  className="group w-full max-w-sm rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-md p-6 shadow-sm hover:shadow-xl transition-all duration-300 ease-out hover:border-gray-300"
+  className="group w-full max-w-sm rounded-2xl border border-gray-200 bg-white/80  p-6 shadow-sm hover:shadow-xl transition-all duration-300 ease-out hover:border-gray-300"
 >
   {/* Icon */}
   <div className="mb-5 flex justify-start">

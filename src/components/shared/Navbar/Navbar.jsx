@@ -34,7 +34,7 @@ export default function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
-            ? "bg-white backdrop-blur-md shadow-sm sm:h-[58px] h-12"
+            ? "bg-white  shadow-sm sm:h-[58px] h-12"
             : "bg-transparent sm:h-[70px] h-16"
         )}
       >
@@ -71,7 +71,7 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <Link href="tel:+8801770511497">
+            <Link href="tel:+8801762644871">
               <CustomButton size="sm" type="primary" Icon={IoCallSharp}>
                 Contact now
               </CustomButton>
@@ -127,7 +127,7 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <Link href="tel:+8801770511497" className="mt-4">
+            <Link href="tel:+8801762644871" className="mt-4">
               <CustomButton size="sm" type="primary" Icon={IoCallSharp}>
                 Contact now
               </CustomButton>
@@ -139,7 +139,7 @@ export default function Navbar() {
         {menuOpen && (
           <div
             onClick={() => setMenuOpen(false)}
-            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-black/40 lg:hidden"
           />
         )}
       </header>
