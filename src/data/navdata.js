@@ -1,5 +1,6 @@
 import { FaHome, FaCalendarAlt, FaUsers, FaEnvelope } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
+import { MdLeaderboard } from "react-icons/md";
 
 export const Navdata = [
   {
@@ -8,9 +9,9 @@ export const Navdata = [
     icon: FaHome,
   },
   {
-    route: "events",
-    name: "Events",
-    icon: FaCalendarAlt, // Represents club events & workshops
+    route: "leaderboard",
+    name: "Leaderboard",
+    icon: MdLeaderboard, // Represents club events & workshops
   },
   {
     route: "members",

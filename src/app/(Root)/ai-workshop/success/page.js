@@ -130,18 +130,22 @@ const SuccessPage = ({ searchParams }) => {
                 </ul>
 
                 <div className="mt-5 flex flex-col sm:flex-row gap-3">
-                  <CustomButton
-                    type="primary"
-                    className="h-11 px-5 w-full sm:w-auto"
-                    onClick={() => handleJoin("button")}
+                  <Link
+                    href={FB_GROUP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <span className="inline-flex items-center gap-2">
-                      <Facebook className="h-5 w-5" />
-                      Join Facebook Group
-                      <ArrowRight className="h-5 w-5" />
-                    </span>
-                  </CustomButton>
-
+                    <CustomButton
+                      type="primary"
+                      className="h-11 px-5 w-full sm:w-auto"
+                    >
+                      <span className="inline-flex items-center gap-2">
+                        <Facebook className="h-5 w-5" />
+                        Join Facebook Group
+                        <ArrowRight className="h-5 w-5" />
+                      </span>
+                    </CustomButton>
+                  </Link>
                   {autoOpen ? (
                     <button
                       type="button"

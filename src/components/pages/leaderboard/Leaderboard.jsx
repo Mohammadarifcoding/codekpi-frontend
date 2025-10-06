@@ -1,121 +1,179 @@
-"use client" // Next.js client component
-
-import { Trophy, User } from 'lucide-react';
-import React, { useEffect, useMemo, useState } from 'react';
-import StudentRow from './StudentRow';
-import SearchBar from './Search';
-
-// Sample data
-const leaderboardData = [
-  { id: "CST-2024-001", name: "ARIF HOSSAIN", points: 950 },
-  { id: "CST-2024-002", name: "FATIMA KHAN", points: 950 },
-  { id: "IT-2024-003", name: "RAHMAN UDDIN", points: 890 },
-  { id: "CST-2024-004", name: "SARAH AHMED", points: 875 },
-  { id: "EEE-2024-005", name: "KARIM HASSAN", points: 950 },
-  { id: "IT-2024-006", name: "NEELIMA AMIN", points: 845 },
-  { id: "CST-2024-007", name: "ABDUL MALIK", points: 830 },
-  { id: "CST-2024-008", name: "RASHIDA BEGUM", points: 815 },
-  { id: "IT-2024-009", name: "HASSAN ALI", points: 800 },
-  { id: "EEE-2024-010", name: "NADIA ISLAM", points: 785 },
-  { id: "CST-2024-011", name: "RAFIQ AHMED", points: 785 },
-  { id: "IT-2024-012", name: "SALMA KHATUN", points: 755 },
-  { id: "CST-2024-013", name: "OMAR FARUK", points: 740 },
-  { id: "EEE-2024-014", name: "RUMA AKTER", points: 725 },
-  { id: "IT-2024-015", name: "JAHIR RAYHAN", points: 710 },
-]
+"use client"
+import { useEffect, useState, useMemo,Fragment } from "react"
+import { Trophy, User } from "lucide-react"
+import StudentRow from "./StudentRow"
+import SearchBar from "./Search"
 
 const Leaderboard = () => {
   const [searchQuery, setSearchQuery] = useState("")
-  const [filteredStudents, setFilteredStudents] = useState([])
+  const [debouncedQuery, setDebouncedQuery] = useState("")
+  const [students, setStudents] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [page, setPage] = useState(1)
+  const [limit] = useState(10)
+  const [meta, setMeta] = useState(null)
 
-  // Sort & rank students
-  const sortedStudents = useMemo(() => {
-    let lastRank = 0
-    let lastPoints = null
-
-    const sorted = leaderboardData.sort((a, b) => b.points - a.points)
-
-    return sorted.map((student, idx) => {
-      let rank
-      if (idx === 0) rank = 1
-      else if (sorted[idx].points === sorted[idx - 1].points) rank = lastRank
-      else rank = idx + 1
-
-      lastRank = rank
-      lastPoints = student.points
-      return { ...student, rank }
-    })
-  }, [])
-
-  // Update filtered list on search
+  // --- Debounce search ---
   useEffect(() => {
-    if (!searchQuery.trim()) {
-      setFilteredStudents(sortedStudents)
-    } else {
-      const filtered = sortedStudents.filter(
-        (student) =>
-          student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          student.id.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      setFilteredStudents(filtered)
+    const handler = setTimeout(() => {
+      setDebouncedQuery(searchQuery.trim())
+      setPage(1) // reset page on new search
+    }, 500) // 500ms debounce
+
+    return () => clearTimeout(handler)
+  }, [searchQuery])
+
+  // --- Fetch data ---
+  useEffect(() => {
+    const fetchStudents = async () => {
+      setLoading(true)
+      try {
+        const params = new URLSearchParams({
+          page: page.toString(),
+          limit: limit.toString(),
+        })
+        if (debouncedQuery) params.append("query", debouncedQuery)
+
+        const res = await fetch(
+          `https://backend.codekpi.club/api/v1/workshop/list?${params.toString()}`,
+          { cache: "no-store" }
+        )
+        const data = await res.json()
+        setStudents(data?.data?.data || [])
+        setMeta(data?.data?.meta || null)
+      } catch (err) {
+        console.error("Failed to fetch students:", err)
+      } finally {
+        setLoading(false)
+      }
     }
-  }, [searchQuery, sortedStudents])
 
-  // Stats
-  const totalStudents = sortedStudents.length
-  const averagePoints = Math.round(
-    sortedStudents.reduce((acc, student) => acc + student.points, 0) / totalStudents
-  )
+    fetchStudents()
+  }, [page, limit, debouncedQuery])
 
+  // --- Sort & rank ---
+
+
+  const totalStudents = meta?.total || 0
+  const averagePoints =
+    students.length > 0
+      ? Math.round(
+          students.reduce((acc, s) => acc + s.point, 0) /
+            students.length
+        )
+      : 0
+console.log(students[0])
   return (
     <div>
-      {/* Stats row */}
+      {/* Stats */}
       <div className="flex justify-between items-center mb-4 text-sm text-gray-600">
-        <span>{filteredStudents.length} students</span>
+        <span>{totalStudents} students</span>
         <span>Average: {averagePoints} points</span>
       </div>
 
-      {/* Search bar */}
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
-      {/* Leaderboard box */}
       <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-        <div className="p-6 border-b border-gray-100">
+        <div className="p-6 border-b border-gray-100 flex justify-between">
           <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
             <Trophy className="w-5 h-5 text-orange-500" />
-            {searchQuery
-              ? `Search Results (${filteredStudents.length})`
+            {debouncedQuery
+              ? `Search Results (${students.length})`
               : "Full Leaderboard"}
           </h2>
         </div>
 
-        {/* Students list */}
-        <div className="divide-y divide-gray-100">
-          {filteredStudents.length > 0 ? (
-            filteredStudents.map((student) => (
+        {/* Students */}
+        <div className="divide-y divide-gray-100 relative min-h-[200px]">
+          {loading && (
+            <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-10">
+              <div className="animate-spin w-6 h-6 border-2 border-orange-500 border-t-transparent rounded-full"></div>
+            </div>
+          )}
+          {students.length > 0 ? (
+            students.map((student) => (
               <StudentRow
-                key={student.id}
+                key={student.studentId}
                 student={student}
                 rank={student.rank}
                 isHighlighted={
-                  searchQuery.trim() !== "" &&
-                  (student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    student.id.toLowerCase().includes(searchQuery.toLowerCase()))
+                  debouncedQuery &&
+                  (student.name.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
+                    student.studentId
+                      .toLowerCase()
+                      .includes(debouncedQuery.toLowerCase()))
                 }
               />
             ))
           ) : (
-            <div className="p-8 text-center">
-              <User className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                No students found
-              </h3>
-              <p className="text-gray-500">
-                Try searching with a different name or student ID.
-              </p>
-            </div>
+            !loading && (
+              <div className="p-8 text-center">
+                <User className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  No students found
+                </h3>
+                <p className="text-gray-500">
+                  Try searching with a different name or student ID.
+                </p>
+              </div>
+            )
           )}
         </div>
+
+        {/* Pagination */}
+{meta && meta.totalPages > 1 && (
+  <div className="flex justify-center gap-1 p-4 border-t text-sm flex-wrap">
+    {/* Prev Button */}
+    <button
+      disabled={page <= 1}
+      onClick={() => setPage((p) => Math.max(1, p - 1))}
+      className="px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 disabled:opacity-50"
+    >
+      Prev
+    </button>
+
+    {/* Page Buttons */}
+    {Array.from({ length: meta.totalPages }, (_, i) => i + 1)
+      .filter((p) => {
+        // Show first, last, current ±1, current ±2
+        return (
+          p === 1 ||
+          p === meta.totalPages ||
+          (p >= page - 2 && p <= page + 2)
+        )
+      })
+      .map((p, idx, arr) => {
+        // Check for ellipsis
+        const prev = arr[idx - 1]
+        const showEllipsis = prev && p - prev > 1
+        return (
+          <Fragment key={p}>
+            {showEllipsis && <span className="px-2">…</span>}
+            <button
+              onClick={() => setPage(p)}
+              className={`px-3 py-1 rounded ${
+                p === page
+                  ? "bg-orange-500 text-white font-semibold"
+                  : "bg-gray-100 hover:bg-gray-200"
+              }`}
+            >
+              {p}
+            </button>
+          </Fragment>
+        )
+      })}
+
+    {/* Next Button */}
+    <button
+      disabled={page >= meta.totalPages}
+      onClick={() => setPage((p) => Math.min(meta.totalPages, p + 1))}
+      className="px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 disabled:opacity-50"
+    >
+      Next
+    </button>
+  </div>
+)}
+
       </div>
     </div>
   )

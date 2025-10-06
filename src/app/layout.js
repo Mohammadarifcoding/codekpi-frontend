@@ -51,3 +51,8 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
+// {
+//   "orgId": "team_6iM3ycdvBV4YAVgb30qJDD6K",
+//   "projectId": "prj_3Vpq9dl8WFwlFDpLJRFjZHWftkyT"
+// }
