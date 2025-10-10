@@ -8,8 +8,8 @@ import AiWorkshopBanner from "@/components/pages/ai-workshop/AiWorkshopBanner";
 export default function Home() {
   return (
     <div>
-      {/* <Banner /> */}
-      <AiWorkshopBanner />
+      <Banner />
+      {/* <AiWorkshopBanner /> */}
       <About />
       <Core />
       <Reviews />

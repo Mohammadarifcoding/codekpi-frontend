@@ -1,11 +1,14 @@
-"use client";
-
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+"use client"
+import { useState } from "react"
+import { useForm, Controller } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { User, Phone, Mail, GraduationCap, Calendar, Building, Hash, Users, AlertCircle, Loader2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import HeadingBadge from "@/components/shared/Heading/HeadingBadge"
 
 const departments = [
   "Computer Technology",
@@ -16,22 +19,17 @@ const departments = [
   "Power Technology",
   "Automobile Technology",
   "RAC Technology",
-];
+]
 
-const sessions = ["19-20", "20-21", "21-22", "22-23", "23-24", "24-25"];
+const sessions = ["19-20", "20-21", "21-22", "22-23", "23-24", "24-25"]
 
-// Define a validation schema using Zod.
-// Note that the field names have been updated to match the API:
-// - "phone" instead of "phoneNumber"
-// - "roll" instead of "rollNumber"
-// - "gender" has been added.
+// Validation schema
 const schema = z.object({
   phone: z
     .string()
     .min(11, { message: "Phone number must be 11 digits." })
     .regex(/^01\d{9}$/, {
-      message:
-        "Invalid phone number. It should start with '01' and be 11 digits.",
+      message: "Invalid phone number. It should start with '01' and be 11 digits.",
     }),
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   gender: z.enum(["male", "female"], {
@@ -46,299 +44,338 @@ const schema = z.object({
     }),
   session: z.string().nonempty({ message: "Please select a session." }),
   roll: z.string().min(1, { message: "Roll is required." }),
-  polytechnic: z
-    .string()
-    .nonempty({ message: "Please select a polytechnic." }),
-});
+})
 
-const JoinNow = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+
+// Error Message Component
+const ErrorMessage = ({ message }) => {
+  if (!message) return null
+
+  return (
+    <div className="flex items-center gap-2 text-red-600 text-sm mt-1">
+      <AlertCircle className="w-4 h-4" />
+      <span>{message}</span>
+    </div>
+  )
+}
+
+// Input Field Component
+const InputField= ({ label, icon, error, required, children }) => {
+  return (
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-gray-700">
+        {icon}
+        {label} {required && <span className="text-red-500">*</span>}
+      </label>
+      {children}
+      <ErrorMessage message={error} />
+    </div>
+  )
+}
+
+const JoinNowForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const {
     register,
     handleSubmit,
     control,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: zodResolver(schema),
-  });
+    mode: "onChange",
+  })
 
   const onSubmit = async (data) => {
-    setIsSubmitting(true);
+    setIsSubmitting(true)
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signup`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
 
-      const result = await response.json();
+      const result = await response.json()
 
       if (result.success) {
-        toast.success(
-          "Registration Successful! You have successfully joined the club!"
-        );
-        reset();
+        toast.success("🎉 Registration Successful! You have successfully joined CodeKPI!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
+        reset()
       } else {
-        // Loop through error sources if available and display each error
         if (result.errorSources && Array.isArray(result.errorSources)) {
           result.errorSources.forEach((errorSource) => {
-            toast.error(`${errorSource.path}: ${errorSource.message}`);
-          });
+            toast.error(`${errorSource.path}: ${errorSource.message}`, {
+              position: "top-center",
+            })
+          })
         } else {
-          toast.error(result.message || "Validation error");
+          toast.error(result.message || "Validation error", {
+            position: "top-center",
+          })
         }
       }
     } catch (error) {
-      toast.error(
-        "There was an error submitting your registration. Please try again."
-      );
+      toast.error("There was an error submitting your registration. Please try again.", {
+        position: "top-center",
+      })
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col max-w-[800px] gap-6 mx-auto p-6 bg-white rounded-lg shadow-md"
-      >
-        <h2 className="text-2xl font-bold text-center mb-6">Join Now</h2>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 sm:py-24 py-10 px-4">
+        <div className="max-w-2xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <HeadingBadge >
+              <Users className="w-4 h-4" />
+Join CodeKPI
+            </HeadingBadge>
 
-        {/* Phone Number */}
-        <div className="space-y-2">
-          <label
-            htmlFor="phone"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Phone Number
-          </label>
-          <input
-            id="phone"
-            placeholder="01XXXXXXXXX"
-            {...register("phone")}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500"
-          />
-          {errors.phone && (
-            <p className="text-sm text-red-500">{errors.phone.message}</p>
-          )}
-        </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Become a <span className="text-orange-500">Member</span>
+            </h1>
+            <p className="text-lg text-gray-600">
+              Join Khulna Polytechnic Institute&apos;s premier programming community and start your journey in tech
+            </p>
+          </div>
 
-        {/* Name */}
-        <div className="space-y-2">
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Name
-          </label>
-          <input
-            id="name"
-            placeholder="Your Name"
-            {...register("name")}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500"
-          />
-          {errors.name && (
-            <p className="text-sm text-red-500">{errors.name.message}</p>
-          )}
-        </div>
-
-        {/* Gender */}
-        <div className="space-y-2">
-          <label
-            htmlFor="gender"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Gender
-          </label>
-          <Controller
-            name="gender"
-            control={control}
-            render={({ field }) => (
-              <div className="flex items-center space-x-4">
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="male"
-                    checked={field.value === "male"}
-                    onChange={field.onChange}
-                    className="form-radio text-blue-500"
-                  />
-                  <span>Male</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="female"
-                    checked={field.value === "female"}
-                    onChange={field.onChange}
-                    className="form-radio text-blue-500"
-                  />
-                  <span>Female</span>
-                </label>
-              </div>
-            )}
-          />
-          {errors.gender && (
-            <p className="text-sm text-red-500">{errors.gender.message}</p>
-          )}
-        </div>
-
-        {/* Department */}
-        <div className="space-y-2">
-          <label
-            htmlFor="department"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Department
-          </label>
-          <Controller
-            name="department"
-            control={control}
-            render={({ field }) => (
-              <select
-                {...field}
-                className="w-full rounded-md border border-gray-300 px-3 py-2 bg-white focus:border-blue-500 focus:ring-blue-500"
+          {/* Form */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:p-8 p-4  border border-gray-400 shadow-lg ">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                 <InputField
+                label="Full Name"
+                icon={<User className="w-4 h-4 inline mr-2" />}
+                error={errors.name?.message}
+                required
               >
-                <option value="">Select Department</option>
-                {departments.map((dept) => (
-                  <option key={dept} value={dept}>
-                    {dept}
-                  </option>
-                ))}
-              </select>
-            )}
-          />
-          {errors.department && (
-            <p className="text-sm text-red-500">{errors.department.message}</p>
-          )}
-        </div>
-
-        {/* Email */}
-        <div className="space-y-2">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email (Optional)
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="your@email.com"
-            {...register("email")}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500"
-          />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-
-        {/* Session */}
-        <div className="space-y-2">
-          <label
-            htmlFor="session"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Session
-          </label>
-          <Controller
-            name="session"
-            control={control}
-            render={({ field }) => (
-              <select
-                {...field}
-                className="w-full rounded-md border border-gray-300 px-3 py-2 bg-white focus:border-blue-500 focus:ring-blue-500"
+                <input
+                  id="name"
+                  placeholder="Your Full Name"
+                  {...register("name")}
+                  className={`w-full px-4 py-3 border rounded-lg  focus:outline-none transition-colors ${
+                    errors.name ? "border-red-300 bg-red-50" : "border-gray-300"
+                  }`}
+                />
+              </InputField>
+              {/* Phone Number */}
+              <InputField
+                label="Phone Number"
+                icon={<Phone className="w-4 h-4 inline mr-2" />}
+                error={errors.phone?.message}
+                required
               >
-                <option value="">Select Session</option>
-                {sessions.map((session) => (
-                  <option key={session} value={session}>
-                    {session}
-                  </option>
-                ))}
-              </select>
-            )}
-          />
-          {errors.session && (
-            <p className="text-sm text-red-500">{errors.session.message}</p>
-          )}
-        </div>
+                <input
+                  id="phone"
+                  placeholder="01XXXXXXXXX"
+                  {...register("phone")}
+                  className={`w-full px-4 py-3  rounded-lg focus:outline-none transition-colors border ${
+                    errors.phone ? "border-red-300 bg-red-50" : "border-gray-300"
+                  }`}
+                />
+              </InputField>
 
-        {/* Roll */}
-        <div className="space-y-2">
-          <label
-            htmlFor="roll"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Roll
-          </label>
-          <input
-            id="roll"
-            placeholder="Your Roll"
-            {...register("roll")}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500"
-          />
-          {errors.roll && (
-            <p className="text-sm text-red-500">{errors.roll.message}</p>
-          )}
-        </div>
+              {/* Name */}
+           
 
-        {/* Polytechnic */}
-        <div className="space-y-2">
-          <span className="block text-sm font-medium text-gray-700">
-            Polytechnic
-          </span>
-          <Controller
-            name="polytechnic"
-            control={control}
-            render={({ field }) => (
-              <div className="flex flex-col space-y-2">
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="Khulna Polytechnic Institute"
-                    checked={field.value === "Khulna Polytechnic Institute"}
-                    onChange={field.onChange}
-                    className="form-radio text-blue-500"
+              {/* Gender */}
+              <InputField
+                label="Gender"
+                icon={<Users className="w-4 h-4 inline mr-2" />}
+                error={errors.gender?.message}
+                required
+              >
+                <Controller
+                  name="gender"
+                  control={control}
+                  render={({ field }) => (
+                    <div className="flex items-center gap-6">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          value="male"
+                          checked={field.value === "male"}
+                          onChange={field.onChange}
+                          className="w-4 h-4 text-orange-500 border  border-gray-300"
+                        />
+                        <span className="text-gray-700">Male</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          value="female"
+                          checked={field.value === "female"}
+                          onChange={field.onChange}
+                          className="w-4 h-4 border border-gray-300"
+                        />
+                        <span className="text-gray-700">Female</span>
+                      </label>
+                    </div>
+                  )}
+                />
+              </InputField>
+
+              {/* Department and Session Row */}
+              <div className="grid md:grid-cols-2 gap-4">
+                {/* Department */}
+                <InputField
+                  label="Department"
+                  icon={<GraduationCap className="w-4 h-4 inline mr-2" />}
+                  error={errors.department?.message}
+                  required
+                >
+                  <Controller
+                    name="department"
+                    control={control}
+                    render={({ field }) => (
+                      <select
+                        {...field}
+                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none transition-colors bg-white ${
+                          errors.department ? "border-red-300 bg-red-50" : "border-gray-300"
+                        }`}
+                      >
+                        <option value="">Select Department</option>
+                        {departments.map((dept) => (
+                          <option key={dept} value={dept}>
+                            {dept}
+                          </option>
+                        ))}
+                      </select>
+                    )}
                   />
-                  <span>Khulna Polytechnic Institute</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="Khulna Mohila Polytechnic Institute"
-                    checked={
-                      field.value === "Khulna Mohila Polytechnic Institute"
-                    }
-                    onChange={field.onChange}
-                    className="form-radio text-blue-500"
+                </InputField>
+
+                {/* Session */}
+                <InputField
+                  label="Session"
+                  icon={<Calendar className="w-4 h-4 inline mr-2" />}
+                  error={errors.session?.message}
+                  required
+                >
+                  <Controller
+                    name="session"
+                    control={control}
+                    render={({ field }) => (
+                      <select
+                        {...field}
+                        className={`w-full px-4 py-3 border rounded-lg  transition-colors bg-white focus:outline-none ${
+                          errors.session ? "border-red-300 bg-red-50" : "border-gray-300"
+                        }`}
+                      >
+                        <option value="">Select Session</option>
+                        {sessions.map((session) => (
+                          <option key={session} value={session}>
+                            {session}
+                          </option>
+                        ))}
+                      </select>
+                    )}
                   />
-                  <span>Khulna Mohila Polytechnic Institute</span>
-                </label>
+                </InputField>
               </div>
-            )}
-          />
-          {errors.polytechnic && (
-            <p className="text-sm text-red-500">{errors.polytechnic.message}</p>
-          )}
-        </div>
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full rounded-md bg-blue-500 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
-        >
-          {isSubmitting ? "Submitting..." : "Join Now"}
-        </button>
-      </form>
-      <ToastContainer />
+              {/* Roll */}
+              <InputField
+                label="Roll Number"
+                icon={<Hash className="w-4 h-4 inline mr-2" />}
+                error={errors.roll?.message}
+                required
+              >
+                <input
+                  id="roll"
+                  placeholder="Your Roll Number"
+                  {...register("roll")}
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline transition-colors ${
+                    errors.roll ? "border-red-300 bg-red-50" : "border-gray-300"
+                  }`}
+                />
+              </InputField>
+
+              {/* Email (Optional) */}
+              <InputField label="Email" icon={<Mail className="w-4 h-4 inline mr-2" />} error={errors.email?.message}>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="your@email.com (optional)"
+                  {...register("email")}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
+                    errors.email ? "border-red-300 bg-red-50" : "border-gray-300"
+                  }`}
+                />
+              </InputField>
+
+
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                disabled={isSubmitting || !isValid}
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    Joining...
+                  </>
+                ) : (
+                  <>
+                    Join CodeKPI
+                    <Users className="w-5 h-5 ml-2" />
+                  </>
+                )}
+              </Button>
+
+              {/* Form Status */}
+              {Object.keys(errors).length > 0 && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <div className="flex items-center gap-2 text-red-700">
+                    <AlertCircle className="w-5 h-5" />
+                    <span className="font-medium">Please fix the following errors:</span>
+                  </div>
+                  <ul className="mt-2 text-sm text-red-600 list-disc list-inside">
+                    {Object.values(errors).map((error, index) => (
+                      <li key={index}>{error.message}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </form>
+          </div>
+
+          {/* Help Text */}
+          <div className="text-center mt-6">
+            <p className="text-sm text-gray-500">
+              Need help? Contact us at{" "}
+              <a href="mailto:contact@codekpi.org" className="text-orange-500 hover:text-orange-600">
+                contact@codekpi.club
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
-  );
-};
+  )
+}
 
-export default JoinNow;
+export default JoinNowForm
