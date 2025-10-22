@@ -21,7 +21,7 @@ const departments = [
   "RAC Technology",
 ]
 
-const sessions = ["19-20", "20-21", "21-22", "22-23", "23-24", "24-25"]
+const sessions = ["19-20", "20-21", "21-22", "22-23", "23-24", "24-25","25-26"]
 
 // Validation schema
 const schema = z.object({
