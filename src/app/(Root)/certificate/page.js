@@ -5,24 +5,29 @@ import {
   Download,
   AlertCircle,
   Award,
-  Home,
-  Mail,
   Trophy,
   Star,
   Calendar,
   FileText,
   Loader2,
+  Mail,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CertificateData } from "@/data/certificate";
+import CertificateData from "./certificate.json";
 
-// Certificate Card
-const CertificateCard = ({ certificate, isLoading, onDownload }) => {
+// Certificate Card with Preview & Two Downloads
+const CertificateCard = ({
+  certificate,
+  isDownloadingPDF,
+  isDownloadingImage,
+  onDownloadPDF,
+  onDownloadImage,
+}) => {
   return (
-    <div className="bg-white rounded-xl p-8 shadow-md border border-gray-200 max-w-xl mx-auto">
+    <div className="bg-white rounded-xl p-6 shadow-md border border-gray-200 max-w-xl mx-auto">
       {/* Header */}
-      <div className="text-center mb-6">
+      <div className="text-center mb-4">
         <Badge className="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 text-gray-800 border border-gray-200 mb-2">
           <Award className="w-4 h-4" /> Certificate Ready
         </Badge>
@@ -34,54 +39,60 @@ const CertificateCard = ({ certificate, isLoading, onDownload }) => {
         </p>
       </div>
 
+      {/* Certificate Preview */}
+      <div className="mb-4">
+        <img
+          src={certificate.downloadImage}
+          alt={`Certificate of ${certificate.name}`}
+          className="w-full rounded-lg border border-gray-200 shadow-sm"
+        />
+      </div>
+
       {/* Certificate Info */}
-      <div className="space-y-4 mb-6">
-        {/* Name */}
-        <div className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
-          <div className="p-3 rounded-lg bg-gray-100">
+      <div className="space-y-3 mb-4">
+        <div className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 bg-gray-50">
+          <div className="p-2 rounded-lg bg-gray-100">
             <FileText className="w-5 h-5 text-gray-600" />
           </div>
           <div>
             <p className="text-xs text-gray-500">Student Name</p>
-            <p className="text-lg font-semibold text-gray-900">
-              {certificate.name}
+            <p className="text-sm font-semibold text-gray-900">
+              {certificate.Name}
             </p>
           </div>
         </div>
 
-        {/* ID and Score */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
-            <div className="p-3 rounded-lg bg-gray-100">
+        <div className="grid md:grid-cols-2 gap-3">
+          <div className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 bg-gray-50">
+            <div className="p-2 rounded-lg bg-gray-100">
               <Badge className="bg-gray-800 text-white text-sm">
-                {certificate.id}
+                {certificate.Id}
               </Badge>
             </div>
             <div>
               <p className="text-xs text-gray-500">Student ID</p>
               <p className="text-sm font-semibold text-gray-900">
-                {certificate.id}
+                {certificate.Id}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
-            <div className="p-3 rounded-lg bg-gray-100">
+          <div className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 bg-gray-50">
+            <div className="p-2 rounded-lg bg-gray-100">
               <Star className="w-5 h-5 text-gray-600" />
             </div>
             <div>
               <p className="text-xs text-gray-500">Score</p>
               <p className="text-sm font-semibold text-gray-900">
-                {certificate.mark}/100
+                {certificate.point}/100
               </p>
             </div>
           </div>
         </div>
 
-        {/* Issue Date */}
         {certificate.issueDate && (
-          <div className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 bg-gray-50">
-            <div className="p-3 rounded-lg bg-gray-100">
+          <div className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 bg-gray-50">
+            <div className="p-2 rounded-lg bg-gray-100">
               <Calendar className="w-5 h-5 text-gray-600" />
             </div>
             <div>
@@ -94,22 +105,32 @@ const CertificateCard = ({ certificate, isLoading, onDownload }) => {
         )}
       </div>
 
-      {/* Download Button */}
-      <div>
+      {/* Download Buttons */}
+      <div className="space-y-2">
         <Button
-          onClick={onDownload}
-          disabled={isLoading}
-          className="w-full bg-gray-900 hover:bg-gray-800 text-white rounded-lg py-3 font-semibold transition-colors"
+          onClick={onDownloadPDF}
+          disabled={isDownloadingPDF}
+          className="w-full bg-gray-900 hover:bg-gray-800 text-white rounded-lg py-2 font-semibold transition-colors"
         >
-          {isLoading ? (
-            <>
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" /> Downloading...
-            </>
+          {isDownloadingPDF ? (
+            <Loader2 className="w-5 h-5 mr-2 animate-spin inline" />
           ) : (
-            <>
-              <Download className="w-5 h-5 mr-2" /> Download Certificate
-            </>
+            <Download className="w-5 h-5 mr-2 inline" />
           )}
+          Download PDF
+        </Button>
+
+        <Button
+          onClick={onDownloadImage}
+          disabled={isDownloadingImage}
+          className="w-full bg-gray-700 hover:bg-gray-600 text-white rounded-lg py-2 font-semibold transition-colors"
+        >
+          {isDownloadingImage ? (
+            <Loader2 className="w-5 h-5 mr-2 animate-spin inline" />
+          ) : (
+            <Download className="w-5 h-5 mr-2 inline" />
+          )}
+          Download Image
         </Button>
       </div>
     </div>
@@ -133,7 +154,8 @@ const CertificateLookupPage = () => {
   const [certificate, setCertificate] = useState(null);
   const [notFound, setNotFound] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
+  const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
+  const [isDownloadingImage, setIsDownloadingImage] = useState(false);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -144,26 +166,30 @@ const CertificateLookupPage = () => {
     setNotFound(false);
 
     await new Promise((r) => setTimeout(r, 1000));
-    const result = CertificateData.find((cert) => cert.email === email);
 
+    const result = CertificateData.find((cert) => cert.email === email);
     if (result) setCertificate(result);
     else setNotFound(true);
 
     setIsSearching(false);
   };
 
-  const handleDownload = async () => {
-    if (!certificate) return;
-    setIsDownloading(true);
+  const downloadFile = (url, setLoading) => {
+    setLoading(true);
     const link = document.createElement("a");
-    link.href = certificate.downloadLink;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
+    link.href = url + "?ik-attachment=true";
+    link.download = url.split("/").pop();
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    setIsDownloading(false);
+    setLoading(false);
   };
+
+  const handleDownloadPDF = () =>
+    certificate && downloadFile(certificate.downloadPDF, setIsDownloadingPDF);
+  const handleDownloadImage = () =>
+    certificate &&
+    downloadFile(certificate.downloadImage, setIsDownloadingImage);
 
   const handleReset = () => {
     setEmail("");
@@ -174,7 +200,7 @@ const CertificateLookupPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 mt-10">
       <div className="relative z-10 max-w-2xl w-full">
-        {/* Header Section */}
+        {/* Header */}
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             AI Workshop Certificate
@@ -216,21 +242,22 @@ const CertificateLookupPage = () => {
           </div>
         ) : certificate ? (
           <>
-            {/* Certificate Success */}
             <div className="text-center mb-6">
               <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center shadow-md">
                 <Trophy className="w-12 h-12 text-gray-900" />
               </div>
               <p className="mt-2 text-gray-700 font-medium">
                 Certificate found for{" "}
-                <span className="font-semibold">{certificate.name}</span>
+                <span className="font-semibold">{certificate.Name}</span>
               </p>
             </div>
 
             <CertificateCard
               certificate={certificate}
-              isLoading={isDownloading}
-              onDownload={handleDownload}
+              isDownloadingPDF={isDownloadingPDF}
+              isDownloadingImage={isDownloadingImage}
+              onDownloadPDF={handleDownloadPDF}
+              onDownloadImage={handleDownloadImage}
             />
 
             <Button
