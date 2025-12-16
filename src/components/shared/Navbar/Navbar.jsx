@@ -48,8 +48,8 @@ export default function Navbar() {
               alt="Company Logo"
               className={`transition-all duration-300 hover:scale-105 h-auto ${
                 isScrolled
-                  ? "sm:w-[80px] w-[60px]"
-                  : "sm:w-[100px] w-[70px]"
+                  ? "sm:w-[70px] w-[60px]"
+                  : "sm:w-[90px] w-[70px]"
               }`}
               priority
             />

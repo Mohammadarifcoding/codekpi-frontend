@@ -2,35 +2,13 @@ import React from "react";
 import { Lightbulb, Users, Heart, BookOpen } from "lucide-react";
 import Container from "@/components/shared/Container";
 import  HeadingBadge from '@/components/shared/Heading/HeadingBadge';
-import { div, MotionVariantsDiv, MotionVariantsH2, MotionVariantsP } from "@/components/shared/animation/AnimationVariants/MotionVariants";
+import { div, MotionVariantsDiv, h2, p } from "@/components/shared/animation/AnimationVariants/MotionVariants";
 
 
 
 
 const Core = () => {
 
-const variants =  {
-  container: {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.2,
-        ease: "easeOut",
-      }
-    },
-  },
-  item: {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.2,
-        ease: "easeOut",
-      },
-    },
-  },
-}
 
 const VALUES = [
   {
@@ -54,7 +32,7 @@ const VALUES = [
 ];
 
   return (
-    <Container className="my-10 sm:my-16 ">
+    <Container className="my-10 lg:my-16 ">
         <div className="mx-auto flex justify-center items-center relative overflow-hidden">
 <HeadingBadge>
 
@@ -67,34 +45,25 @@ const VALUES = [
          
       <div className="text-center max-w-4xl mx-auto mb-12">
         <div
-          variants={variants.container}
-          initial="hidden"
-          animate={"visible"}
         >
-         <MotionVariantsH2
+         <h2
             id="core-heading"
-            variants={variants.item}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
           >
             What <span className="text-secondary">Make</span> Us Crazy
-          </MotionVariantsH2>
-          <MotionVariantsP variants={variants.item} className="md:text-xl sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          </h2>
+          <p  className="md:text-xl sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
             These are the beliefs that guide everything we do at CodeKPI.
-          </MotionVariantsP>
+          </p>
         </div>
       </div>
 
-      <MotionVariantsDiv
-        variants={variants.container}
-        initial="hidden"
-        whileInView="visible"
-  viewport={{ once: true, amount: 0.3 }}
+      <div
         className="flex md:flex-row md:flex-nowrap gap-4 flex-wrap justify-center items-center"
       >
         {VALUES.map((value) => (
 <div
   key={value.title}
-  variants={variants.item}
   className="group w-full max-w-sm rounded-2xl border border-gray-200 bg-white/80  p-6 shadow-sm hover:shadow-xl transition-all duration-300 ease-out hover:border-gray-300"
 >
   {/* Icon */}
@@ -119,7 +88,7 @@ const VALUES = [
 </div>
 
         ))}
-      </MotionVariantsDiv>
+      </div>
     </Container>
   );
 };

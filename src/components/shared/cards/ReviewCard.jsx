@@ -20,7 +20,7 @@ const ReviewCard = ({ review , show = false}) => {
       <div className="flex items-start gap-4 mb-4">
         {/* Profile Image */}
         <Image
-          src={review.userImage || "/placeholder.svg?height=48&width=48"}
+          src={review?.userImage?.image || "/placeholder.svg?height=48&width=48"}
           alt={review.name}
           className="w-12 h-12 rounded-full object-cover border-2 border-orange-200"
           width={60}
@@ -60,7 +60,7 @@ const ReviewCard = ({ review , show = false}) => {
       <div className="mb-4 flex-grow">
         <p className="text-gray-600 leading-relaxed whitespace-pre-line">
           {review.text?.length < 270 || show ? review.text : <>
-          {review.text?.slice(0,250)}  <Link href={`/reviews/view/${review._id}`} className="text-orange-500 hover:underline">Read More</Link>
+          {review.text?.slice(0,250)}  <span   className="text-orange-500 hover:underline cursor-pointer">Read More</span>
           
           
           

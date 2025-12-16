@@ -80,10 +80,14 @@ const Footer = ({ className = "" }) => {
 
           {/* Join CTA - Simplified */}
           <div className="flex flex-col items-start md:items-end">
-            <CustomButton Icon={ArrowRight}>
+            <Link href={"https://www.facebook.com/share/g/1Ya6SbiJEU/"}>
+              <CustomButton  Icon={ArrowRight}>
 Join Our Community
 
             </CustomButton>
+            
+            </Link>
+          
 
             <div className="flex gap-2 mt-4">
               {socialLinks.map((social) => (

@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Roboto } from "next/font/google";
+import ApolloWrapper from "@/graphql/ApolloWrapper";
 export const metadata = {
   title: "CodeKpi",
   description:
@@ -42,11 +43,12 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
-
       <body className="english">
-        <div> {children} </div>
-        <ToastContainer />
-        <Analytics />
+        <ApolloWrapper>
+          {children}
+          <ToastContainer />
+          <Analytics />
+        </ApolloWrapper>
       </body>
     </html>
   );

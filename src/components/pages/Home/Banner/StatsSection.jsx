@@ -10,8 +10,8 @@ const StatsSection = () => {
   const variants = BannerVariants(shouldReduceMotion)
 
   const stats = [
-    { icon: Users, value: "100+", label: "Active Coders" },
-    { icon: Trophy, value: "5+", label: "Workshops" },
+    { icon: Users, value: "200+", label: "Active Coders" },
+    { icon: Trophy, value: "10+", label: "Workshops" },
     { icon: Code, value: "24/7", label: "Code Support" },
   ]
    

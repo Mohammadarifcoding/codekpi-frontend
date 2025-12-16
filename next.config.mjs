@@ -32,6 +32,11 @@ const nextConfig = {
         hostname: "img.youtube.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "plus.unsplash.com",
+        pathname: "/**",
+      },
     ],
   },
 };

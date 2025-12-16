@@ -11,29 +11,12 @@ import videoImage from '/src/assets/whybest/image.jpg'
 
 
 const About = () => {
-const variants = () => {
- return{ container: {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-    },
-  },
-  item: {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  },}
-}
 
 
   return (
     <section
     id="about"
-      className={`relative py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 overflow-hidden`}
+      className={`relative py-10 lg:py-20  bg-gradient-to-br from-gray-50 via-white to-blue-50/30 overflow-hidden`}
       aria-labelledby="about-heading"
     >
       {/* <FloatingElements /> */}
@@ -42,9 +25,6 @@ const variants = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
-          variants={variants.container}
-          initial="hidden"
-          animate={"visible"}
           className="text-center sm:mb-16 mb-4"
         >
             <HeadingBadge>

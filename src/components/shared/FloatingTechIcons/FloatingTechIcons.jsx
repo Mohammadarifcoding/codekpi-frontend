@@ -1,6 +1,6 @@
 
 import TechIcon from "./TechIcon"
-// import { techIcons } from "../technologyIcon/TechnologyIcon"
+import { techIcons } from "../technologyIcon/TechnologyIcon"
 import { Code } from "lucide-react"
 import { AiIcons } from "../AiIcon/AiIcon"
 
@@ -10,7 +10,7 @@ const FloatingTechIcons = () => {
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {AiIcons.map((tech, index) => (
+      {techIcons.map((tech, index) => (
         <div key={index} className="absolute" style={tech.position}>
           <TechIcon
             icon={tech.icon}

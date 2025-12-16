@@ -20,6 +20,9 @@ import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import HeadingBadge from "@/components/shared/Heading/HeadingBadge";
 import { motion } from "framer-motion";
+import {useMutation} from "@apollo/client/react"
+import { CREATE_REVIEW } from "@/graphql/api/review";
+import { departments, shifts } from "@/lib/user";
 
 // Lazy load components
 const ImageUpload = dynamic(() => import("@/components/shared/ImageUpload/ImageUpload"));
@@ -40,22 +43,33 @@ const reviewSchema = z.object({
     .min(10, "Review must be at least 10 characters")
     .max(1000, "Review must be less than 1000 characters"),
   rating: z.number().min(1, "Please select a rating").max(5),
-  department: z.string().min(1, "Please select your department"),
+  department: z.enum([
+  "COMPUTER",
+  "CIVIL",
+  "ELECTRICAL",
+  "MECHANICAL",
+  "ELECTRONICS",
+  "POWER",
+  "AUTOMOBILE",
+  "RAC",
+  "OTHER",
+]),
   session: z.string().min(1, "Please select your session"),
-  shift: z.string().min(1, "Please select your shift"),
+  shift: z.enum(["MORNING", "EVENING"]),
   status: z.boolean().default(true),
 });
 
-const departments = ["CST", "CT", "ET", "MT", "ENT", "PT", "RAC"];
-const sessions = Array.from(
-  { length: 21 },
-  (_, i) => `${2004 + i}-${(2005 + i).toString().slice(-2)}`
-);
-const shifts = ["Morning Shift", "Day Shift"];
+// const departments = ["CST", "CT", "ET", "MT", "ENT", "PT", "RAC"];
+const sessions = Array.from({ length: 6 }, (_, i) => {
+  const start = 20 + i;
+  const end = start + 1;
+  return `${start}-${end}`;
+});
+// const shifts = ["Morning Shift", "Day Shift"];
 
 const ReviewForm = () => {
   const [submitted, setSubmitted] = useState(false);
-
+const [createReview, { data, loading, error }] = useMutation(CREATE_REVIEW)
   const {
     control,
     handleSubmit,
@@ -82,11 +96,20 @@ const ReviewForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/review`,
-        data
-      );
-      if (res.data.success) {
+      const payload = {
+        input: {
+          name: data.name,
+          text: data.text,
+          rating: Number(data.rating),
+          department: data.department,
+          session: data.session,
+          shift: data.shift,
+          userImage: data.userImage,
+        },
+      };
+      console.log(payload)
+       const res = await createReview({ variables: payload });
+     if (res?.data?.createReview?.success) {
         setSubmitted(true);
       } else {
         throw new Error("Failed to submit review");
@@ -211,8 +234,8 @@ const ReviewForm = () => {
                     >
                       <option value="">Select Department</option>
                       {departments.map((dept) => (
-                        <option key={dept} value={dept}>
-                          {dept}
+                        <option key={dept.label} value={dept.value}>
+                          {dept.label}
                         </option>
                       ))}
                     </select>
@@ -269,8 +292,8 @@ const ReviewForm = () => {
                     >
                       <option value="">Select Shift</option>
                       {shifts.map((shift) => (
-                        <option key={shift} value={shift}>
-                          {shift}
+                        <option key={shift.label} value={shift.value}>
+                          {shift.value}
                         </option>
                       ))}
                     </select>

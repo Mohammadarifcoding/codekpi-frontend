@@ -1,70 +1,54 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react"
-import { Users, Loader2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import Rating from "@/components/ui/Rating"
-import ReviewCard from "@/components/shared/cards/ReviewCard"
-import SkeletonCard from "@/components/shared/skeleton/SkeletonCard"
-import Link from "next/link"
-import useAxios from "@/hooks/useAxios"
+import React, { useEffect, useState } from "react";
+import { Users, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import Rating from "@/components/ui/Rating";
+import ReviewCard from "@/components/shared/cards/ReviewCard";
+import SkeletonCard from "@/components/shared/skeleton/SkeletonCard";
+import Link from "next/link";
+import { useQuery, gql } from "@apollo/client/react";
+import { GET_REVIEWS } from "@/graphql/api/review";
 
+const REVIEWS_PER_LOAD = 6;
 
-const REVIEWS_PER_LOAD = 3
 
 const Reviews = ({ className = "" }) => {
-  const [displayedReviews, setDisplayedReviews] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
-  const [reviewsData, setReviewsData] = useState([])
+  const [displayedReviews, setDisplayedReviews] = useState([]);
+  const [page, setPage] = useState(1);
 
-  const axios = useAxios()
+  const { data, loading, fetchMore } = useQuery(GET_REVIEWS, {
+    variables: { limit: REVIEWS_PER_LOAD, page: 1 },
+    notifyOnNetworkStatusChange: true,
+  });
 
-const loadReviews = (offset = 0, data = reviewsData) => {
-  setLoading(true)
-  const newReviews = data.slice(offset, offset + REVIEWS_PER_LOAD)
-  const hasMoreReviews = offset + REVIEWS_PER_LOAD < data.length
-
-  setDisplayedReviews(prev => [...prev, ...newReviews])
-  setHasMore(hasMoreReviews)
-  setLoading(false)
-}
-
-
-useEffect(() => {
-  const fetchReviews = async () => {
-    try {
-      setLoading(true)
-      const res = await axios.get("/review")
-      const data = res.data.data
-
-      setReviewsData(data)
-      loadReviews(0, data)
-      setLoading(false)
-    } catch (error) {
-      console.error("Failed to fetch reviews:", error)
-      setLoading(false)
+  useEffect(() => {
+    if (data?.reviews?.data) {
+      setDisplayedReviews(data.reviews.data);
     }
-  }
-     fetchReviews()
-}, [])
+  }, [data]);
 
+  const handleLoadMore = async () => {
+    const nextPage = page + 1;
+    const result = await fetchMore({
+      variables: { limit: REVIEWS_PER_LOAD, page: nextPage },
+    });
 
-
-
-  const handleLoadMore = () => {
-    setLoading(true)
-    loadReviews(displayedReviews.length, reviewsData)
-  }
+    if (result.data?.reviews?.data?.length > 0) {
+      setDisplayedReviews((prev) => [...prev, ...result.data.reviews.data]);
+      setPage(nextPage);
+    }
+  };
 
   const averageRating =
-    reviewsData?.length > 0
-      ? reviewsData.reduce((acc, review) => acc + review.rating, 0) / reviewsData.length
-      : 0
+    displayedReviews.length > 0
+      ? displayedReviews.reduce((acc, review) => acc + review.rating, 0) / displayedReviews.length
+      : 0;
+
   return (
     <section
-      className={`py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 ${className}`}
+      className={`py-10 lg:py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 ${className}`}
       aria-labelledby="reviews-heading"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -94,7 +78,7 @@ useEffect(() => {
           <div className="flex justify-center gap-8 text-center">
             <div>
               <div className="text-3xl font-bold text-orange-500">
-                {100}+
+                {"50"}+
               </div>
               <div className="text-sm text-gray-500">Happy Students</div>
             </div>
@@ -112,11 +96,8 @@ useEffect(() => {
 
         {/* Reviews Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {displayedReviews.map((review, index) => (
-            <ReviewCard
-              key={review?._id}
-              review={review}
-            />
+          {displayedReviews.map((review) => (
+            <ReviewCard key={review.id} review={review} />
           ))}
 
           {loading &&
@@ -126,7 +107,7 @@ useEffect(() => {
         </div>
 
         {/* Load More Button */}
-        {hasMore && (
+        {data?.reviews?.data?.length === REVIEWS_PER_LOAD && (
           <div className="text-center">
             <Button
               onClick={handleLoadMore}
@@ -146,23 +127,25 @@ useEffect(() => {
         )}
 
         {/* End Message */}
-        {!hasMore && !loading && displayedReviews.length > 0 && (
-          <div className="text-center">
-            <p className="text-gray-500">You&apos;ve seen all reviews! 🎉</p>
-            <p className="text-sm text-gray-400 mt-2">
-              Want to share your experience?{" "}
-              <Link
-                href="/reviews/write"
-                className="text-orange-500 hover:text-orange-600 underline"
-              >
-                Submit a review
-              </Link>
-            </p>
-          </div>
-        )}
+        {/* {displayedReviews.length > 0 &&
+          data?.reviews?.data?.length < REVIEWS_PER_LOAD &&
+          !loading && ( */}
+            <div className="text-center">
+              {/* <p className="text-gray-500">You&apos;ve seen all reviews! 🎉</p> */}
+              <p className="text-sm text-gray-400 mt-4">
+                Want to share your experience?{" "}
+                <Link
+                  href="/reviews/write"
+                  className="text-orange-500 hover:text-orange-600 underline"
+                >
+                  Submit a review
+                </Link>
+              </p>
+            </div>
+          {/* )} */}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Reviews
+export default Reviews;
